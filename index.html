@@ -1,0 +1,1464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The Start-Up Challenge</title>
+<meta name="theme-color" content="#4e2507">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%2318b7ae'/%3E%3Ccircle cx='50' cy='44' r='24' fill='%23faeb37' stroke='%234e2507' stroke-width='6'/%3E%3Crect x='38' y='72' width='24' height='10' rx='5' fill='%234e2507'/%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Lexend:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --teal:#18b7ae; --teal-d:#0e7f79; --teal-l:#d3f1ef;
+  --orange:#ea591c; --orange-d:#c4430f;
+  --yellow:#faeb37; --yellow-d:#d9c92a; --yellow-l:#fdf7b8;
+  --brown:#4e2507; --brown-l:#7a4a2a;
+  --cream:#efeae3; --white:#ffffff; --line:rgba(78,37,7,.18);
+  --display:'Lexend','Trebuchet MS',system-ui,sans-serif;
+  --body:'Hanken Grotesk',system-ui,-apple-system,'Segoe UI',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
+body{font-family:var(--body);font-size:17px;line-height:1.65;color:var(--brown);background:var(--white);overflow-x:hidden;}
+button{font:inherit;color:inherit;}
+a{color:var(--teal-d);}
+:focus-visible{outline:4px solid var(--orange);outline-offset:3px;}
+.skip{position:absolute;left:-999px;top:0;background:var(--yellow);color:var(--brown);padding:.6rem 1rem;font-weight:700;z-index:999;}
+.skip:focus{left:8px;top:8px;}
+h1,h2,h3,h4{font-family:var(--display);color:var(--brown);line-height:1.12;letter-spacing:-.01em;}
+.wrap{max-width:1060px;margin:0 auto;padding:0 clamp(1rem,4vw,2rem);padding-left:max(clamp(1rem,4vw,2rem),env(safe-area-inset-left,0px));padding-right:max(clamp(1rem,4vw,2rem),env(safe-area-inset-right,0px));}
+
+/* ---------- navigation: top bar, outline (sidebar / drawer), bottom bar ---------- */
+:root{--navh:56px;--olw:304px;}
+[hidden]{display:none!important;}
+#nav{position:sticky;top:0;z-index:120;background:var(--brown);color:#fff;padding-top:env(safe-area-inset-top,0px);box-shadow:0 4px 0 rgba(0,0,0,.18);}
+.navin{height:var(--navh);display:flex;align-items:center;gap:.5rem;padding:0 .6rem;padding-left:max(.6rem,env(safe-area-inset-left,0px));padding-right:max(.6rem,env(safe-area-inset-right,0px));}
+.menubtn{flex:0 0 auto;width:46px;height:46px;display:flex;align-items:center;justify-content:center;background:transparent;border:2px solid rgba(255,255,255,.6);border-radius:6px;cursor:pointer;color:#fff;}
+.menubtn svg{width:24px;height:24px;}
+.brand{flex:0 0 auto;display:flex;align-items:center;gap:.55rem;background:none;border:none;color:#fff;font-family:var(--display);font-weight:700;font-size:1.02rem;cursor:pointer;padding:.35rem .5rem .35rem .2rem;white-space:nowrap;}
+.brand svg{width:24px;height:30px;}
+.brand span{display:none;}
+.navtitle{flex:1 1 auto;min-width:0;font-family:var(--display);font-weight:600;font-size:.95rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.navprog{flex:0 0 auto;margin-left:auto;display:flex;align-items:center;gap:.5rem;background:rgba(255,255,255,.14);border-radius:999px;padding:.28rem .75rem;font-family:var(--display);font-weight:600;font-size:.85rem;white-space:nowrap;}
+.navprog .mini{display:none;width:54px;height:9px;background:rgba(255,255,255,.28);border-radius:999px;overflow:hidden;}
+.navprog .mini i{display:block;height:100%;width:0;background:var(--yellow);transition:width .3s;}
+#scrim{position:fixed;inset:0;z-index:190;background:rgba(40,18,3,.6);display:none;}
+body.menu-open #scrim{display:block;}
+body.menu-open{overflow:hidden;}
+#outline{position:fixed;z-index:200;top:0;bottom:0;left:0;width:min(88vw,344px);background:var(--cream);color:var(--brown);overflow-y:auto;overscroll-behavior:contain;border-right:4px solid var(--brown);transform:translateX(-104%);visibility:hidden;transition:transform .25s ease,visibility 0s linear .25s;padding-bottom:2rem;}
+body.menu-open #outline{transform:none;visibility:visible;transition:transform .25s ease,visibility 0s;}
+.olhead{position:sticky;top:0;z-index:2;display:flex;align-items:center;justify-content:space-between;padding:calc(.7rem + env(safe-area-inset-top,0px)) .6rem .7rem 1rem;background:var(--brown);color:#fff;}
+.olhead b{font-family:var(--display);font-size:1.08rem;}
+.olx{width:46px;height:46px;display:flex;align-items:center;justify-content:center;background:transparent;border:2px solid rgba(255,255,255,.6);border-radius:6px;color:#fff;cursor:pointer;}
+.olx svg{width:22px;height:22px;}
+.ol{list-style:none;padding:.8rem .7rem 0;}
+.ol>li{margin-bottom:.3rem;}
+.olink{width:100%;display:flex;align-items:center;gap:.65rem;text-align:left;background:transparent;border:2px solid transparent;border-radius:6px;cursor:pointer;color:var(--brown);font-family:var(--display);font-weight:600;font-size:.98rem;line-height:1.2;padding:.5rem .7rem;min-height:46px;}
+.olink.top.cur{background:var(--yellow);border-color:var(--brown);}
+.steprow .sq{flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;background:var(--teal);color:#fff;font-weight:700;font-size:1rem;box-shadow:3px 3px 0 rgba(0,0,0,.16);}
+.steprow .tt{flex:1 1 auto;min-width:0;}
+.steprow .st{flex:0 0 auto;font-family:var(--body);font-size:.78rem;font-weight:700;background:#fff;border:2px solid var(--brown);border-radius:999px;padding:0 .5rem;line-height:1.5;}
+.olstep.cur>.steprow{background:var(--yellow);border-color:var(--brown);}
+.olstep.done .steprow .sq{background:var(--orange);}
+.olstep.done .steprow .st{background:var(--orange);color:#fff;border-color:var(--orange);}
+.olsub{display:none;list-style:none;margin:.15rem 0 .55rem 1.5rem;padding-left:.6rem;border-left:4px solid var(--teal);}
+.olstep.open .olsub{display:block;}
+.olink.sub{font-family:var(--body);font-weight:600;font-size:.95rem;min-height:42px;padding:.3rem .6rem;}
+.olink.sub .lb{flex:1 1 auto;min-width:0;}
+.olink.sub .ck{flex:0 0 auto;display:none;width:18px;height:18px;stroke:currentColor;color:var(--teal-d);}
+.olink.sub.ok .ck{display:block;}
+.olink.sub.cur{background:var(--orange);color:#fff;}
+.olink.sub.cur .ck{color:#fff;}
+.olfoot{margin:1rem .7rem 0;padding:.9rem;background:#fff;border:3px solid var(--brown);border-radius:6px;}
+.olfoot .lab{font-family:var(--display);font-weight:600;font-size:.92rem;margin-bottom:.35rem;}
+.olfoot .meter{height:14px;}
+.olfoot .sub{font-size:.86rem;margin-top:.35rem;}
+@media(hover:hover){.olink:hover{background:var(--yellow-l);}.olink.sub.cur:hover{background:var(--orange-d);}.olx:hover,.menubtn:hover{background:rgba(255,255,255,.12);}}
+#botbar{position:fixed;left:0;right:0;bottom:0;z-index:110;display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:.4rem;background:var(--brown);padding:.4rem .5rem calc(.4rem + env(safe-area-inset-bottom,0px));padding-left:max(.5rem,env(safe-area-inset-left,0px));padding-right:max(.5rem,env(safe-area-inset-right,0px));box-shadow:0 -4px 0 rgba(0,0,0,.18);}
+.bbtn{display:flex;align-items:center;gap:.4rem;min-width:0;min-height:52px;background:transparent;border:2px solid rgba(255,255,255,.55);border-radius:6px;color:#fff;cursor:pointer;padding:.2rem .55rem;text-align:left;}
+.bbtn.next{justify-content:flex-end;text-align:right;background:var(--orange);border-color:var(--orange);}
+.bbtn:disabled{opacity:.3;cursor:default;}
+.bbtn svg{width:20px;height:20px;flex:0 0 auto;fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;}
+.bbtn .bl{display:flex;flex-direction:column;line-height:1.15;min-width:0;}
+.bbtn small{font-size:.72rem;opacity:.9;}
+.bbtn b{font-family:var(--display);font-size:.92rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.bmid{min-width:96px;min-height:52px;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.15;background:var(--yellow);color:var(--brown);border:2px solid var(--yellow);border-radius:6px;font-family:var(--display);font-weight:700;font-size:.92rem;padding:0 .6rem;cursor:pointer;white-space:nowrap;}
+.bmid small{font-weight:600;font-size:.72rem;}
+.totop{position:fixed;right:max(.8rem,env(safe-area-inset-right,0px));bottom:calc(78px + env(safe-area-inset-bottom,0px));z-index:105;width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--yellow);color:var(--brown);border:3px solid var(--brown);box-shadow:3px 3px 0 var(--brown);cursor:pointer;}
+.totop svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round;}
+body{padding-bottom:calc(68px + env(safe-area-inset-bottom,0px));}
+.pager{display:none!important;}
+@media(min-width:1180px){
+  body{padding-bottom:0;}
+  .brand span{display:inline;}
+  .navtitle,.menubtn,#botbar,.olhead,#scrim{display:none!important;}
+  .navprog .mini{display:block;}
+  #outline{top:var(--navh);width:var(--olw);transform:none;visibility:visible;transition:none;padding-bottom:3rem;}
+  main,footer{margin-left:var(--olw);}
+  body.menu-open{overflow:auto;}
+  .ol{padding-top:.7rem;}
+  .ol>li{margin-bottom:.12rem;}
+  .olink{min-height:40px;padding:.3rem .6rem;}
+  .olink.sub{min-height:34px;padding:.2rem .6rem;font-size:.92rem;}
+  .steprow .sq{width:28px;height:28px;}
+  .olsub{margin-bottom:.3rem;}
+  .olfoot{margin-top:.7rem;padding:.7rem .8rem;}
+  .totop{bottom:1.4rem;}
+  .pager{display:flex!important;}
+}
+.view:focus{outline:none;}
+
+/* ---------- views ---------- */
+.view{display:none;}
+.view.active{display:block;}
+.band{padding:clamp(2.2rem,6vw,4.2rem) 0;}
+.band.teal{background:var(--teal);}
+.band.yellow{background:var(--yellow);}
+.band.orange{background:var(--orange);}
+.band.cream{background:var(--cream);}
+.nw{white-space:nowrap;}
+.band.groups{border-top:8px solid var(--brown);}
+.band.tight{padding:clamp(1.6rem,4vw,2.6rem) 0;}
+.view [id]{scroll-margin-top:calc(var(--navh) + 20px + env(safe-area-inset-top,0px));}
+
+/* ---------- hero ---------- */
+.hero{background:var(--teal);overflow:hidden;}
+.hero .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(1rem,4vw,3rem);align-items:center;padding-top:clamp(1.8rem,5vw,3.4rem);padding-bottom:clamp(1.8rem,5vw,3.4rem);}
+.hero h1{font-weight:800;font-size:clamp(2.8rem,8.6vw,5.6rem);line-height:1.02;color:#fff;text-shadow:4px 4px 0 var(--brown);}
+.hero .bar{width:min(220px,60%);height:12px;background:var(--yellow);margin:1.3rem 0 .9rem;box-shadow:5px 5px 0 rgba(0,0,0,.25);}
+.hero .term{font-size:1.15rem;font-weight:700;color:var(--brown);}
+.hero .ctas{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:1.6rem;}
+.hero svg.art{width:100%;height:auto;max-height:360px;}
+
+/* ---------- buttons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;font-family:var(--display);font-weight:600;font-size:1rem;text-decoration:none;cursor:pointer;background:var(--orange);color:#fff;border:3px solid var(--brown);border-radius:6px;padding:.65rem 1.25rem;min-height:48px;box-shadow:5px 5px 0 var(--brown);transition:transform .08s,box-shadow .08s;}
+.btn:active{transform:translate(4px,4px);box-shadow:1px 1px 0 var(--brown);}
+.btn.yellow{background:var(--yellow);color:var(--brown);}
+.btn.teal{background:var(--teal-d);color:#fff;}
+.btn.white{background:#fff;color:var(--brown);}
+.btn.small{font-size:.92rem;padding:.45rem .95rem;min-height:42px;box-shadow:4px 4px 0 var(--brown);}
+.btn svg{width:18px;height:18px;flex:0 0 auto;}
+@media(hover:hover){.btn:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--brown);}.btn:active{transform:translate(4px,4px);box-shadow:1px 1px 0 var(--brown);}}
+
+/* ---------- home blocks ---------- */
+.remind .box{background:var(--orange);color:#fff;padding:clamp(1.4rem,4vw,2.6rem);box-shadow:14px 14px 0 rgba(0,0,0,.22);position:relative;max-width:880px;}
+.remind .qm{display:block;font-family:Georgia,serif;font-size:7rem;line-height:.6;height:3.2rem;color:var(--teal);font-weight:700;}
+.remind h2{color:#fff;font-weight:700;font-size:clamp(1.9rem,6vw,3.4rem);margin-bottom:.8rem;}
+.remind p{font-size:clamp(1.25rem,3.4vw,1.9rem);line-height:1.35;font-weight:500;}
+.dce{display:grid;grid-template-columns:1fr 1fr;align-items:stretch;}
+.dce .art{background:#fff;display:flex;align-items:center;justify-content:center;padding:2rem;}
+.dce .art svg{width:min(380px,100%);height:auto;}
+.dce .txt{background:var(--teal);padding:clamp(1.6rem,5vw,3.2rem);}
+.dce h2{color:#fff;text-shadow:3px 3px 0 var(--brown);font-weight:800;font-size:clamp(2rem,5.4vw,3.2rem);margin-bottom:1rem;}
+.dce p{font-weight:600;font-size:1.12rem;line-height:1.7;color:var(--brown);}
+.dce p+p{margin-top:.9rem;}
+.throughout{text-align:center;}
+.throughout h2{font-size:clamp(1.8rem,5vw,3rem);margin-bottom:1.6rem;}
+.thru{display:grid;grid-template-columns:1fr auto 1fr;gap:1.2rem 2rem;align-items:center;max-width:900px;margin:0 auto;}
+.thru .col{display:grid;gap:2.4rem;}
+.thru .col p{font-family:var(--display);font-weight:600;font-size:clamp(1.05rem,2.6vw,1.45rem);}
+.thru svg{width:clamp(110px,22vw,190px);height:auto;}
+.thru-note{max-width:34em;margin:1.8rem auto 0;font-size:1rem;}
+.sixsteps{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.5fr);}
+.sixsteps .left{background:var(--yellow);padding:clamp(1.6rem,5vw,3rem);display:flex;align-items:center;}
+.sixsteps .left h2{font-size:clamp(2.2rem,6vw,3.6rem);font-weight:800;}
+.sixsteps .right{padding:clamp(1.4rem,4vw,2.6rem);background:#fff;}
+.steplist{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:repeat(3,auto);grid-auto-flow:column;gap:1rem 1.4rem;list-style:none;}
+.steplist button{width:100%;display:flex;gap:.8rem;align-items:flex-start;text-align:left;background:none;border:none;cursor:pointer;padding:.4rem;border-radius:6px;}
+.steplist .sq,.glance .sq{flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;background:var(--teal);color:#fff;font-family:var(--display);font-weight:700;font-size:1.3rem;box-shadow:5px 5px 0 rgba(0,0,0,.16);}
+.steplist .tt{font-family:var(--display);font-weight:700;font-size:1.12rem;text-decoration:underline;text-decoration-thickness:3px;text-underline-offset:4px;line-height:1.25;display:block;}
+.steplist .pg{display:block;font-size:.88rem;font-weight:600;color:var(--brown-l);margin-top:.15rem;text-decoration:none;}
+.steplist button.done .sq{background:var(--orange);}
+@media(hover:hover){.steplist button:hover{background:var(--yellow-l);}}
+.rublink{margin-top:1.4rem;text-align:right;}
+.overall{margin-top:1.6rem;padding-top:1.2rem;border-top:3px solid var(--brown);}
+.overall .lab{font-family:var(--display);font-weight:600;margin-bottom:.4rem;}
+.meter{height:16px;background:var(--cream);border:3px solid var(--brown);border-radius:4px;overflow:hidden;}
+.meter i{display:block;height:100%;width:0;background:var(--orange);transition:width .3s;}
+.overall .sub{margin-top:.5rem;font-size:.95rem;}
+.overall .btn{margin-top:.8rem;}
+.groups .box{background:var(--orange);color:#fff;padding:clamp(1.4rem,4vw,2.6rem);box-shadow:14px 14px 0 rgba(0,0,0,.22);max-width:760px;}
+.groups h2{color:#fff;font-size:clamp(1.9rem,6vw,3rem);margin-bottom:.6rem;}
+.groups p{font-size:clamp(1.2rem,3.2vw,1.7rem);font-weight:500;}
+
+/* ---------- quick links ---------- */
+.qlinks h2{font-size:clamp(1.7rem,4.6vw,2.4rem);margin-bottom:.4rem;}
+.qlinks .lead{margin-bottom:1.4rem;max-width:36em;}
+.qgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));gap:1.2rem;}
+.qcol h3{font-size:1.15rem;margin-bottom:.6rem;padding-bottom:.4rem;border-bottom:4px solid var(--teal);}
+.qcol:nth-child(2) h3{border-color:var(--orange);}
+.qcol:nth-child(3) h3{border-color:var(--yellow-d);}
+.qcol ul{list-style:none;display:grid;gap:.45rem;}
+.qcol a{display:flex;align-items:center;gap:.5rem;font-weight:700;color:var(--brown);text-decoration:none;background:#fff;border:2px solid var(--brown);border-radius:6px;padding:.55rem .75rem;min-height:46px;}
+.qcol a svg{width:16px;height:16px;flex:0 0 auto;color:var(--teal-d);}
+@media(hover:hover){.qcol a:hover{background:var(--yellow);}}
+
+/* ---------- step pages ---------- */
+.shead{padding:clamp(1.6rem,5vw,3rem) 0 clamp(1.4rem,4vw,2.4rem);}
+.shead.teal{background:var(--teal);}
+.shead.yellow{background:var(--yellow);}
+.shead .wrap{display:flex;gap:clamp(1rem,3vw,1.8rem);align-items:flex-start;flex-wrap:wrap;}
+.bignum{flex:0 0 auto;width:clamp(64px,12vw,96px);height:clamp(64px,12vw,96px);display:flex;align-items:center;justify-content:center;background:var(--brown);color:var(--yellow);font-family:var(--display);font-weight:800;font-size:clamp(2.4rem,7vw,3.8rem);box-shadow:7px 7px 0 rgba(0,0,0,.24);}
+.shead.yellow .bignum{background:var(--teal);color:#fff;}
+.shead h1{font-weight:800;font-size:clamp(2rem,6vw,3.6rem);}
+.shead.teal h1{color:#fff;text-shadow:3px 3px 0 var(--brown);}
+.shead .meta{flex:1 1 300px;}
+.shead .sum{margin-top:.6rem;font-size:1.15rem;font-weight:600;max-width:34em;}
+.prog{margin-top:1rem;max-width:380px;}
+.prog .lab{font-size:.95rem;font-weight:700;margin-bottom:.3rem;}
+.prog .meter{background:#fff;}
+.glance{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(205px,100%),1fr));gap:1.1rem 1.4rem;list-style:none;margin:0;}
+.glance button{display:flex;gap:.85rem;align-items:flex-start;text-align:left;width:100%;background:#fff;border:3px solid var(--brown);border-radius:6px;padding:.9rem;cursor:pointer;box-shadow:5px 5px 0 rgba(78,37,7,.25);}
+.glance .tt{display:block;font-family:var(--display);font-weight:700;font-size:1.08rem;line-height:1.2;text-decoration:underline;text-decoration-thickness:3px;text-underline-offset:3px;margin-bottom:.25rem;}
+.glance .ds{display:block;font-size:.95rem;line-height:1.5;}
+@media(hover:hover){.glance button:hover{background:var(--yellow-l);}}
+.lblbar{display:flex;gap:.9rem;align-items:center;flex-wrap:wrap;justify-content:space-between;margin-bottom:1.1rem;}
+.lbl{display:flex;gap:.8rem;align-items:center;}
+.lbl .tag{flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;min-width:46px;height:46px;padding:0 .5rem;background:var(--orange);color:#fff;font-family:var(--display);font-weight:700;font-size:1.15rem;box-shadow:4px 4px 0 rgba(0,0,0,.2);}
+.lbl .tag.y{background:var(--yellow);color:var(--brown);}
+.lbl .tag.t{background:var(--teal);}
+.lbl h2{font-weight:700;font-size:clamp(1.35rem,3.8vw,2rem);}
+.band.teal .lbl h2{color:#fff;text-shadow:2px 2px 0 var(--brown);}
+.sub-intro{font-size:1.2rem;font-weight:600;max-width:38em;margin-bottom:1.2rem;}
+.cols2{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem 2.2rem;}
+.cols3{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;}
+.blk{background:#fff;border:3px solid var(--brown);border-radius:6px;padding:1.1rem 1.2rem 1.2rem;box-shadow:6px 6px 0 rgba(78,37,7,.22);}
+.band.teal .blk,.band.yellow .blk{box-shadow:6px 6px 0 rgba(0,0,0,.25);}
+.blk h3{font-size:1.25rem;margin-bottom:.5rem;}
+.blk h4{font-size:1.02rem;margin:.9rem 0 .3rem;font-family:var(--display);font-weight:600;}
+.blk ul,.blk ol{padding-left:1.25rem;}
+.blk li{margin:.3rem 0;}
+.blk li::marker{color:var(--orange-d);font-weight:700;}
+.blk p+p{margin-top:.6rem;}
+.blk.plain{border:none;box-shadow:none;background:transparent;padding:0;}
+.fine{font-size:.95rem;}
+.callout{display:flex;gap:.8rem;align-items:flex-start;background:var(--yellow);border:3px solid var(--brown);border-radius:6px;padding:.9rem 1.1rem;font-weight:700;margin:1.1rem 0;box-shadow:5px 5px 0 rgba(78,37,7,.25);}
+.callout.teal{background:var(--teal-l);}
+.callout.orange{background:var(--orange);color:#fff;}
+.callout svg{flex:0 0 auto;width:26px;height:26px;margin-top:2px;}
+.numlist{list-style:none;counter-reset:n;display:grid;gap:1rem;}
+.numlist>li{counter-increment:n;display:grid;grid-template-columns:44px 1fr;gap:.9rem;background:#fff;border:3px solid var(--brown);border-radius:6px;padding:1rem 1.1rem;box-shadow:5px 5px 0 rgba(78,37,7,.22);}
+.numlist>li::before{content:counter(n);width:44px;height:44px;background:var(--teal);color:#fff;font-family:var(--display);font-weight:700;font-size:1.3rem;display:flex;align-items:center;justify-content:center;box-shadow:4px 4px 0 rgba(0,0,0,.16);}
+.numlist>li:nth-child(even)::before{background:var(--orange);}
+.numlist h3,.numlist h4{font-size:1.15rem;margin-bottom:.3rem;}
+.numlist ul{padding-left:1.2rem;}
+.numlist li li{margin:.2rem 0;}
+.numlist .opt{font-weight:600;color:var(--brown-l);}
+
+/* ---------- AI badge ---------- */
+.aib{flex:0 0 auto;width:92px;text-align:center;border-radius:3px;overflow:hidden;box-shadow:5px 5px 0 rgba(0,0,0,.22);background:var(--cream);color:var(--brown);}
+.aib .top{background:var(--brown);padding:.45rem 0 .35rem;}
+.aib .n{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:#2c1503;color:#fff;font-family:var(--display);font-weight:800;font-size:1.2rem;}
+.aib .bot{padding:.3rem .2rem .45rem;font-family:var(--display);font-weight:700;font-size:.78rem;line-height:1.1;}
+.aib .bot svg{display:block;width:26px;height:26px;margin:.25rem auto 0;fill:var(--brown);}
+.aib.l1 .top{background:var(--teal);}
+.aib.l1 .n{background:var(--teal-d);}
+.aib.l1 .bot svg{fill:var(--teal-d);}
+.aib.l2 .top{background:var(--yellow);}
+.aib.l2 .n{background:var(--brown);color:var(--yellow);}
+.aib.l2 .bot svg{fill:#c7b400;}
+
+/* ---------- tasks ---------- */
+.tasks{list-style:none;display:grid;gap:.5rem;margin-top:1rem;}
+.tasks.boxed{background:var(--cream);border:3px dashed var(--brown);border-radius:6px;padding:.9rem 1rem;}
+.tasks .th{font-family:var(--display);font-weight:700;font-size:1.02rem;margin-bottom:.1rem;}
+.task{display:flex;gap:.75rem;align-items:flex-start;cursor:pointer;min-height:36px;padding:.15rem 0;}
+.task input{position:absolute;opacity:0;width:1px;height:1px;}
+.task .box{flex:0 0 auto;width:26px;height:26px;border:3px solid var(--brown);border-radius:4px;background:#fff;margin-top:1px;display:flex;align-items:center;justify-content:center;transition:background .12s;}
+.task .box svg{width:16px;height:16px;opacity:0;stroke:#fff;}
+.task input:checked + .box{background:var(--orange);}
+.task input:checked + .box svg{opacity:1;}
+.task input:checked ~ .tt{text-decoration:line-through;text-decoration-thickness:2px;color:var(--brown-l);}
+.task input:focus-visible + .box{outline:4px solid var(--orange);outline-offset:3px;}
+
+/* ---------- link cards ---------- */
+.linkcard{display:flex;gap:1rem;align-items:center;flex-wrap:wrap;background:#fff;border:3px solid var(--brown);border-radius:6px;padding:1rem 1.2rem;box-shadow:6px 6px 0 rgba(78,37,7,.25);margin-top:1rem;}
+.linkcard .t{flex:1 1 240px;font-family:var(--display);font-weight:600;font-size:1.12rem;line-height:1.3;}
+.linkcard .t small{display:block;font-family:var(--body);font-weight:500;font-size:.92rem;color:var(--brown-l);margin-top:.2rem;}
+.video{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:1.4rem;align-items:center;background:#fff;border:3px solid var(--brown);border-radius:6px;padding:1rem;box-shadow:7px 7px 0 rgba(78,37,7,.28);}
+.video a.thumb{position:relative;display:block;aspect-ratio:16/9;background:#1b1b1b;overflow:hidden;border-radius:4px;}
+.video a.thumb img{position:absolute;inset:0;z-index:1;width:100%;height:100%;object-fit:cover;display:block;}
+.video a.thumb .play{position:absolute;inset:0;z-index:2;display:flex;align-items:center;justify-content:center;}
+.video a.thumb .play span{width:68px;height:48px;border-radius:12px;background:#e62117;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 0 rgba(0,0,0,.35);}
+.video a.thumb .play span::after{content:'';border-left:18px solid #fff;border-top:11px solid transparent;border-bottom:11px solid transparent;margin-left:4px;}
+.video h3{font-size:1.2rem;margin-bottom:.35rem;}
+.video p{font-size:.97rem;margin-bottom:.9rem;}
+.fallback{display:flex;align-items:flex-end;justify-content:center;text-align:center;color:#fff;font-family:var(--display);font-weight:600;padding:1rem 1rem 1.1rem;position:absolute;inset:0;z-index:0;background:linear-gradient(135deg,#2a2a2a,#111);}
+
+/* ---------- tools ---------- */
+.tool{margin-top:1rem;padding:.9rem 1rem 1rem;background:var(--teal-l);border:3px solid var(--brown);border-radius:6px;}
+.tool label.tl{display:block;font-family:var(--display);font-weight:700;margin-bottom:.4rem;}
+.tool input[type=text],.tool textarea{width:100%;font:inherit;font-size:1.02rem;color:var(--brown);background:#fff;border:3px solid var(--brown);border-radius:4px;padding:.55rem .7rem;min-height:46px;}
+.tool textarea{min-height:110px;resize:vertical;}
+.tool .res{margin-top:.5rem;font-weight:700;min-height:1.6em;}
+.tool .res.ok{color:#0b6a3d;}
+.tool .res.warn{color:var(--orange-d);}
+.tool .nt{font-size:.88rem;margin-top:.2rem;color:var(--brown-l);}
+.swatches{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.6rem;margin-top:.7rem;list-style:none;}
+.swatches li{display:flex;gap:.6rem;align-items:center;font-weight:700;font-size:.95rem;line-height:1.25;}
+.swatches .sw{flex:0 0 auto;width:38px;height:38px;border-radius:4px;border:3px solid var(--brown);}
+.swatches small{display:block;font-weight:500;font-size:.88rem;}
+
+/* ---------- brand board guide ---------- */
+.bb{display:grid;gap:.6rem;grid-template-columns:repeat(6,minmax(0,1fr));grid-template-areas:"name name name name name name" "motto motto mission mission mission mission" "l1 l1 l2 l2 l3 l3" "font font pal pal promo promo";background:#fff;border:4px solid var(--brown);border-radius:6px;padding:.8rem;box-shadow:8px 8px 0 rgba(78,37,7,.25);margin-top:1rem;}
+.bb>div{min-width:0;overflow-wrap:break-word;position:relative;border:3px solid var(--brown);border-radius:4px;padding:.55rem .6rem .5rem 2.3rem;display:flex;align-items:center;font-family:var(--display);font-weight:600;font-size:.95rem;line-height:1.2;min-height:62px;}
+.bb .no{position:absolute;left:.45rem;top:50%;transform:translateY(-50%);width:26px;height:26px;border-radius:50%;background:var(--brown);color:#fff;font-size:.9rem;display:flex;align-items:center;justify-content:center;}
+.bb .a{background:var(--yellow);grid-area:name;}
+.bb .b{background:var(--yellow-l);grid-area:motto;}
+.bb .c{background:var(--teal-l);grid-area:mission;}
+.bb .d1{background:var(--cream);grid-area:l1;}
+.bb .d2{background:var(--cream);grid-area:l2;}
+.bb .d3{background:var(--cream);grid-area:l3;}
+.bb .e{background:var(--teal-l);grid-area:font;}
+.bb .f{background:var(--orange);color:#fff;grid-area:pal;}
+.bb .f .no{background:#fff;color:var(--brown);}
+.bb .g{background:var(--yellow-l);grid-area:promo;}
+.bb .f{flex-direction:column;align-items:flex-start;justify-content:center;gap:.35rem;}
+.bb .pal{display:flex;gap:4px;margin-left:0;}
+.bb .pal i{width:16px;height:16px;border:2px solid var(--brown);border-radius:3px;}
+
+/* ---------- PVLEGS ---------- */
+.pv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem;}
+.pv{display:grid;background:none;border:none;padding:0;cursor:pointer;perspective:900px;text-align:left;}
+.pv .face{grid-area:1/1;backface-visibility:hidden;-webkit-backface-visibility:hidden;border:3px solid var(--brown);border-radius:6px;padding:1rem 1.1rem 1.1rem;transition:transform .45s;box-shadow:6px 6px 0 rgba(0,0,0,.25);display:flex;flex-direction:column;justify-content:flex-start;min-height:190px;}
+.pv .front{background:#fff;}
+.pv .back{background:var(--orange);color:#fff;transform:rotateY(180deg);}
+.pv.flipped .front{transform:rotateY(180deg);}
+.pv.flipped .back{transform:rotateY(0deg);}
+.pv .ltr{font-family:var(--display);font-weight:800;font-size:3.2rem;line-height:1;color:var(--teal-d);}
+.pv .wd{font-family:var(--display);font-weight:700;font-size:1.3rem;margin:.2rem 0;}
+.pv .ds{font-size:1rem;}
+.pv .hint{margin-top:.6rem;font-size:.85rem;font-weight:700;color:var(--orange-d);}
+.pv .back .wd{color:#fff;}
+.pv .back .ds{font-size:1.15rem;font-weight:600;}
+.pv .back .hint{color:var(--yellow);}
+
+/* ---------- timer ---------- */
+.timer{background:var(--brown);color:#fff;border-radius:6px;padding:1.2rem;text-align:center;box-shadow:8px 8px 0 rgba(0,0,0,.25);max-width:520px;}
+.timer h3{color:var(--yellow);margin-bottom:.2rem;font-size:1.3rem;}
+.timer .tdisp{font-family:var(--display);font-weight:800;font-size:clamp(3.2rem,12vw,5rem);line-height:1.1;font-variant-numeric:tabular-nums;margin:.3rem 0;}
+.timer .tbar{height:14px;background:rgba(255,255,255,.2);border-radius:4px;overflow:hidden;margin:.3rem 0 .6rem;}
+.timer .tbar i{display:block;height:100%;width:0;background:var(--teal);transition:width .25s linear;}
+.timer.warn .tbar i{background:var(--yellow);}
+.timer.over .tbar i{background:var(--orange);}
+.timer .tmsg{min-height:1.6em;font-weight:700;margin-bottom:.8rem;}
+.timer .row{display:flex;gap:.7rem;justify-content:center;flex-wrap:wrap;}
+.timer .btn{border-color:#fff;box-shadow:4px 4px 0 rgba(255,255,255,.28);}
+.timer.warn .tdisp{color:var(--yellow);}
+.timer.over .tdisp{color:#ff8a5b;}
+
+/* ---------- rubrics + nav buttons ---------- */
+.rubgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));gap:1.4rem;}
+.rub{display:flex;flex-direction:column;gap:.7rem;background:#fff;border:3px solid var(--brown);border-radius:6px;padding:1.1rem;box-shadow:6px 6px 0 rgba(78,37,7,.25);}
+.rub .sq{width:46px;height:46px;background:var(--teal);color:#fff;font-family:var(--display);font-weight:700;font-size:1.35rem;display:flex;align-items:center;justify-content:center;box-shadow:4px 4px 0 rgba(0,0,0,.16);}
+.rub:nth-child(3n+2) .sq{background:var(--orange);}
+.rub:nth-child(3n) .sq{background:var(--brown);}
+.rub h3{font-size:1.25rem;}
+.rub p{font-size:.95rem;}
+.pager{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;padding:2rem 0 3rem;}
+footer{background:var(--brown);color:#e8ddd0;padding:1.6rem 0 calc(1.6rem + env(safe-area-inset-bottom,0px));font-size:.95rem;}
+footer b{color:var(--yellow);font-family:var(--display);}
+.sgap{height:1.2rem;}
+
+/* ---------- responsive ---------- */
+@media(max-width:860px){
+  .hero .wrap{grid-template-columns:1fr;}
+  .hero svg.art{max-height:260px;order:-1;}
+  .dce,.sixsteps{grid-template-columns:1fr;}
+  .cols3,.pv-grid{grid-template-columns:1fr 1fr;}
+  .video{grid-template-columns:1fr;}
+}
+@media(max-width:640px){
+  body{font-size:16.5px;}
+  .cols2,.cols3,.pv-grid{grid-template-columns:1fr;}
+  .steplist{grid-template-columns:1fr;grid-template-rows:none;grid-auto-flow:row;}
+  .thru{grid-template-columns:1fr;text-align:center;}
+  .thru .col{gap:.8rem;}
+  .thru svg{margin:0 auto;}
+  .remind .box,.groups .box{box-shadow:9px 9px 0 rgba(0,0,0,.22);}
+  .bb{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-areas:"name name" "motto mission" "l1 l2" "l3 font" "pal promo";}
+  .bb>div{font-size:.85rem;padding-left:2.1rem;}
+  .rublink{text-align:left;}
+  .aib{width:84px;}
+}
+@media(max-width:380px){
+  .bb>div{font-size:.8rem;padding-left:2rem;padding-right:.4rem;}
+  .bb .no{width:22px;height:22px;font-size:.8rem;left:.35rem;}
+  .pv-grid{grid-template-columns:1fr;}
+  .btn{padding:.6rem 1rem;}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition:none!important;animation:none!important;}
+  html{scroll-behavior:auto;}
+}
+
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to the content</a>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="i-ext" viewBox="0 0 24 24"><path d="M14 3h7v7M21 3l-9 9M18 14v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 2.5l2.9 6.1 6.7.8-4.9 4.6 1.3 6.6L12 17.4 6 20.6l1.3-6.6-4.9-4.6 6.7-.8z"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5" fill="none" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-warn" viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="currentColor"/><path d="M12 6v8M12 17v1.5" stroke="#fff" stroke-width="2.8" stroke-linecap="round"/></symbol>
+</svg>
+
+<header id="nav">
+  <div class="navin">
+    <button type="button" class="menubtn" id="menubtn" aria-label="Open the menu" aria-expanded="false" aria-controls="outline"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"/></svg></button>
+    <button type="button" class="brand" onclick="go('home')" aria-label="The Start-Up Challenge, go to the home page">
+      <svg viewBox="0 0 200 260" aria-hidden="true"><path d="M100 12c-46 0-78 30-78 72 0 26 12 44 30 60 9 8 14 16 14 28v8h68v-8c0-12 5-20 14-28 18-16 30-34 30-60 0-42-32-72-78-72z" fill="#18b7ae" stroke="#faeb37" stroke-width="12" stroke-linejoin="round"/><rect x="70" y="190" width="60" height="18" rx="9" fill="#faeb37"/><rect x="78" y="218" width="44" height="18" rx="9" fill="#faeb37"/></svg>
+      <span>The Start-Up Challenge</span>
+    </button>
+    <div class="navtitle" id="navtitle" aria-hidden="true">The Start-Up Challenge</div>
+    <div class="navprog" id="navprog" role="img" aria-label="Checklist progress: 0 of 34 tasks done"><span id="navprog-t">0/34</span><span class="mini"><i id="navprog-fill"></i></span></div>
+  </div>
+</header>
+
+<div id="scrim"></div>
+
+<aside id="outline" aria-label="Project outline">
+  <div class="olhead"><b>Menu</b><button type="button" class="olx" id="olclose" aria-label="Close the menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></button></div>
+  <ul class="ol">
+    <li><button type="button" class="olink top" data-v="home" data-lab="Home">Home</button></li>
+    <li class="olstep" data-step="s1"><button type="button" class="olink steprow" data-v="s1" aria-expanded="false" aria-controls="ol-s1" data-lab="Step 1: Brainstorm and Research"><span class="sq">1</span><span class="tt">Brainstorm and Research</span><span class="st" data-ols="s1">0/0</span></button><ul class="olsub" id="ol-s1"><li><button type="button" class="olink sub" data-v="s1" data-a="s1a" data-lab="1A Brainstorm ideas"><span class="lb">1A Brainstorm ideas</span><svg class="ck" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></button></li><li><button type="button" class="olink sub" data-v="s1" data-a="s1b" data-lab="1B Brainstorm worksheet"><span class="lb">1B Brainstorm worksheet</span><svg class="ck" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></button></li><li><button type="button" class="olink sub" data-v="s1" data-a="s1c" data-lab="1C Research and interview"><span class="lb">1C Research and interview</span><svg class="ck" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></button></li><li><button type="button" class="olink sub" data-v="s1" data-a="s1d" data-lab="1D Interview worksheet"><span class="lb">1D Interview worksheet</span><svg class="ck" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></button></li></ul></li>
+    <li class="olstep" data-step="s2"><button type="button" class="olink steprow" data-v="s2" aria-expanded="false" aria-controls="ol-s2" data-lab="Step 2: Design an Initial Mock-Up"><span class="sq">2</span><span class="tt">Design an Initial Mock-Up</span><span class="st" data-ols="s2">0/0</span></button><ul class="olsub" id="ol-s2"><li><button type="button" class="olink sub" data-v="s2" data-a="s2a" data-lab="2A Product proposal"><span class="lb">2A Product proposal</span><svg class="ck" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></button></li><li><button type="button" class="olink sub" data-v="s2" data-a="s2b" data-lab="2B Sketch or blueprint"><span class="lb">2B Sketch or blueprint</span><svg class="ck" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></button></li></ul></li>
+    <li class="olstep" data-step="s3"><button type="button" class="olink steprow" data-v="s3" aria-expanded="false" aria-controls="ol-s3" data-lab="Step 3: Design a Company"><span class="sq">3</span><span class="tt">Design a Company</span><span class="st" data-ols="s3">0/0</span></button><ul class="olsub" id="ol-s3"><li><button type="button" class="olink sub" data-v="s3" data-a="s3name" data-lab="Name"><span class="lb">Name</span><svg class="ck" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></button></li><li><button type="button" class="olink sub" data-v="s3" data-a="s3motto" data-lab="Motto"><span class="lb">Motto</span><svg class="ck" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></button></li><li><button type="button" class="olink sub" data-v="s3" data-a="s3mission" data-lab="Mission statement"><span class="lb">Mission statement</span><svg class="ck" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></button></li><li><button type="button" class="olink sub" data-v="s3" data-a="s3colors" data-lab="Color scheme"><span class="lb">Color scheme</span><svg class="ck" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></button></li></ul></li>
+    <li class="olstep" data-step="s4"><button type="button" class="olink steprow" data-v="s4" aria-expanded="false" aria-controls="ol-s4" data-lab="Step 4: Design a Digital Brand Board"><span class="sq">4</span><span class="tt">Design a Digital Brand Board</span><span class="st" data-ols="s4">0/0</span></button><ul class="olsub" id="ol-s4"><li><button type="button" class="olink sub" data-v="s4" data-a="s4what" data-lab="What to include"><span class="lb">What to include</span><svg class="ck" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></button></li><li><button type="button" class="olink sub" data-v="s4" data-a="s4format" data-lab="Format and presentation"><span class="lb">Format and presentation</span><svg class="ck" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></button></li><li><button type="button" class="olink sub" data-v="s4" data-a="s4guide" data-lab="Layout guide and checklist"><span class="lb">Layout guide and checklist</span><svg class="ck" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></button></li></ul></li>
+    <li class="olstep" data-step="s5"><button type="button" class="olink steprow" data-v="s5" aria-expanded="false" aria-controls="ol-s5" data-lab="Step 5: Design a Physical Brand Board"><span class="sq">5</span><span class="tt">Design a Physical Brand Board</span><span class="st" data-ols="s5">0/0</span></button><ul class="olsub" id="ol-s5"><li><button type="button" class="olink sub" data-v="s5" data-a="s5a" data-lab="5A Physical brand board"><span class="lb">5A Physical brand board</span><svg class="ck" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></button></li></ul></li>
+    <li class="olstep" data-step="s6"><button type="button" class="olink steprow" data-v="s6" aria-expanded="false" aria-controls="ol-s6" data-lab="Step 6: Design and Present"><span class="sq">6</span><span class="tt">Design and Present</span><span class="st" data-ols="s6">0/0</span></button><ul class="olsub" id="ol-s6"><li><button type="button" class="olink sub" data-v="s6" data-a="s6video" data-lab="Watch a real pitch"><span class="lb">Watch a real pitch</span><svg class="ck" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></button></li><li><button type="button" class="olink sub" data-v="s6" data-a="s6include" data-lab="What your presentation includes"><span class="lb">What your presentation includes</span><svg class="ck" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></button></li><li><button type="button" class="olink sub" data-v="s6" data-a="s6shark" data-lab="Connect it to Shark Tank"><span class="lb">Connect it to Shark Tank</span><svg class="ck" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></button></li><li><button type="button" class="olink sub" data-v="s6" data-a="s6pvlegs" data-lab="PVLEGS"><span class="lb">PVLEGS</span><svg class="ck" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></button></li><li><button type="button" class="olink sub" data-v="s6" data-a="s6timer" data-lab="Pitch timer"><span class="lb">Pitch timer</span><svg class="ck" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></button></li><li><button type="button" class="olink sub" data-v="s6" data-a="s6present" data-lab="Time to present"><span class="lb">Time to present</span><svg class="ck" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></button></li></ul></li>
+    <li><button type="button" class="olink top" data-v="rubrics" data-lab="Rubrics">Rubrics</button></li>
+    <li><button type="button" class="olink top" data-v="home" data-a="ql" data-lab="All the links">All the links</button></li>
+  </ul>
+  <div class="olfoot">
+    <div class="lab" id="olf-lab">Your checklist progress</div>
+    <div class="meter" role="progressbar" aria-labelledby="olf-lab" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="olf-meter"><i id="olf-fill"></i></div>
+    <div class="sub" id="olf-sub"></div>
+  </div>
+</aside>
+
+<nav id="botbar" aria-label="Previous and next page">
+  <button type="button" class="bbtn" id="bb-prev"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg><span class="bl"><small>Back</small><b id="bb-prev-t">Home</b></span></button>
+  <button type="button" class="bmid" id="bb-mid" aria-controls="outline"><small>Menu</small><span id="bb-mid-t">Home</span></button>
+  <button type="button" class="bbtn next" id="bb-next"><span class="bl"><small>Next</small><b id="bb-next-t">Step 1</b></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+</nav>
+
+<button type="button" class="totop" id="totop" aria-label="Back to the top of the page" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 15l7-7 7 7"/></svg></button>
+
+<main id="main">
+
+<!-- ============================ HOME ============================ -->
+<div class="view active" id="view-home" tabindex="-1">
+
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <h1>The <span class="nw">Start-Up</span> Challenge</h1>
+        <div class="bar"></div>
+        <p class="term">DCE Fall 2025</p>
+        <div class="ctas">
+          <button type="button" class="btn" id="cta-continue" hidden>Continue where you left off</button>
+          <button type="button" class="btn yellow" onclick="go('s1')">Start with Step 1</button>
+          <button type="button" class="btn white" onclick="go('rubrics')">See the rubrics</button>
+        </div>
+      </div>
+      <svg class="art" viewBox="0 0 440 340" role="img" aria-label="Illustration of a business dashboard with a bar chart, a stack of coins, and an hourglass">
+        <g fill="#fff"><ellipse cx="352" cy="46" rx="36" ry="20"/><ellipse cx="322" cy="58" rx="26" ry="16"/><ellipse cx="382" cy="60" rx="24" ry="14"/></g>
+        <rect x="36" y="92" width="368" height="214" rx="16" fill="#0e7f79"/>
+        <rect x="52" y="106" width="336" height="186" rx="10" fill="#8fe0da"/>
+        <rect x="92" y="204" width="40" height="70" fill="#ea591c" stroke="#4e2507" stroke-width="4"/>
+        <rect x="142" y="168" width="40" height="106" fill="#faeb37" stroke="#4e2507" stroke-width="4"/>
+        <rect x="192" y="132" width="40" height="142" fill="#ea591c" stroke="#4e2507" stroke-width="4"/>
+        <rect x="242" y="184" width="40" height="90" fill="#faeb37" stroke="#4e2507" stroke-width="4"/>
+        <path d="M90 168l62-30 60-28 70-30" fill="none" stroke="#4e2507" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M268 74l16 2-6 15" fill="none" stroke="#4e2507" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+        <g transform="translate(318 150)">
+          <rect x="-4" y="0" width="56" height="9" rx="3" fill="#4e2507"/>
+          <rect x="-4" y="95" width="56" height="9" rx="3" fill="#4e2507"/>
+          <path d="M2 9h44L28 52l18 43H2l18-43z" fill="#faeb37" stroke="#4e2507" stroke-width="5" stroke-linejoin="round"/>
+          <path d="M14 84h20l-10-16z" fill="#ea591c"/>
+        </g>
+        <g stroke="#4e2507" stroke-width="4"><ellipse cx="330" cy="318" rx="30" ry="10" fill="#faeb37"/><ellipse cx="330" cy="308" rx="30" ry="10" fill="#faeb37"/><ellipse cx="330" cy="298" rx="30" ry="10" fill="#faeb37"/><ellipse cx="384" cy="322" rx="24" ry="8" fill="#faeb37"/><ellipse cx="384" cy="313" rx="24" ry="8" fill="#faeb37"/></g>
+      </svg>
+    </div>
+  </section>
+
+  <section class="band yellow remind">
+    <div class="wrap">
+      <div class="box">
+        <span class="qm" aria-hidden="true">“</span>
+        <h2>Can Someone Remind Me?</h2>
+        <p>What is a “Tinkering Mentality”?</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="dce" aria-labelledby="dce-h">
+    <div class="art">
+      <svg viewBox="0 0 360 300" role="img" aria-label="Illustration of a browser window with a big light bulb and a small light bulb">
+        <rect x="20" y="30" width="320" height="220" rx="12" fill="#e7f6f5" stroke="#4e2507" stroke-width="5"/>
+        <path d="M20 42a12 12 0 0 1 12-12h296a12 12 0 0 1 12 12v22H20z" fill="#18b7ae" stroke="#4e2507" stroke-width="5"/>
+        <circle cx="46" cy="47" r="6" fill="#fff"/><circle cx="68" cy="47" r="6" fill="#faeb37"/><circle cx="90" cy="47" r="6" fill="#ea591c"/>
+        <circle cx="140" cy="140" r="52" fill="#faeb37" stroke="#4e2507" stroke-width="5"/>
+        <path d="M120 188h40v18h-40z" fill="#ea591c" stroke="#4e2507" stroke-width="5" stroke-linejoin="round"/>
+        <path d="M126 124l14 14 14-14M140 138v28" fill="none" stroke="#4e2507" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="246" cy="116" r="28" fill="#faeb37" stroke="#4e2507" stroke-width="5"/>
+        <path d="M232 138h28v12h-28z" fill="#ea591c" stroke="#4e2507" stroke-width="5" stroke-linejoin="round"/>
+        <rect x="236" y="172" width="78" height="56" rx="6" fill="#ea591c" stroke="#4e2507" stroke-width="5"/>
+        <rect x="250" y="200" width="10" height="18" fill="#fff"/><rect x="268" y="190" width="10" height="28" fill="#fff"/><rect x="286" y="180" width="10" height="38" fill="#fff"/>
+        <path d="M40 276c6-26 14-38 30-48-4 18-8 30-30 48zM326 276c-6-26-14-38-30-48 4 18 8 30 30 48z" fill="#18b7ae" stroke="#4e2507" stroke-width="4"/>
+      </svg>
+    </div>
+    <div class="txt">
+      <h2 id="dce-h">In This DCE</h2>
+      <p>Your team will use the “Tinkering Mentality” to become entrepreneurs by creating your own product and business. Throughout the process, you will research, design, brand, and pitch your idea in a Shark Tank style presentation. Your goal is to think creatively, work collaboratively, and apply PVLEGS concepts learned all semester so far.</p>
+    </div>
+  </section>
+
+  <section class="band throughout">
+    <div class="wrap">
+      <h2>Throughout this project you will…</h2>
+      <div class="thru">
+        <div class="col"><p>Submit Proposals</p><p>Receive advice/feedback</p></div>
+        <svg viewBox="0 0 200 260" role="img" aria-label="Illustration of a light bulb"><path d="M100 14c-46 0-78 30-78 72 0 26 12 44 30 60 9 8 14 16 14 28v8h68v-8c0-12 5-20 14-28 18-16 30-34 30-60 0-42-32-72-78-72z" fill="#18b7ae" stroke="#4e2507" stroke-width="9" stroke-linejoin="round"/><circle cx="100" cy="86" r="32" fill="#faeb37"/><path d="M100 40v14M100 118v14M54 86h14M132 86h14" stroke="#4e2507" stroke-width="8" stroke-linecap="round"/><rect x="68" y="182" width="64" height="15" rx="7" fill="#d9d4cc" stroke="#4e2507" stroke-width="6"/><rect x="76" y="204" width="48" height="15" rx="7" fill="#d9d4cc" stroke="#4e2507" stroke-width="6"/><path d="M100 220v14" stroke="#4e2507" stroke-width="6"/><circle cx="100" cy="244" r="10" fill="#faeb37" stroke="#4e2507" stroke-width="6"/></svg>
+        <div class="col"><p>Create products</p><p>Edit your thoughts and ideas</p></div>
+      </div>
+      <p class="thru-note">You must also work with your group to keep each other updated so that you can be as successful as possible.</p>
+    </div>
+  </section>
+
+  <section class="sixsteps" aria-labelledby="six-h">
+    <div class="left"><h2 id="six-h">This DCE has 6 Steps</h2></div>
+    <div class="right">
+      <ol class="steplist">
+        <li><button type="button" data-go="s1" data-stepbtn="s1"><span class="sq">1</span><span><span class="tt">Brainstorm and Research</span><span class="pg" data-prog="s1"></span></span></button></li>
+        <li><button type="button" data-go="s2" data-stepbtn="s2"><span class="sq">2</span><span><span class="tt">Create a Mock-Up</span><span class="pg" data-prog="s2"></span></span></button></li>
+        <li><button type="button" data-go="s3" data-stepbtn="s3"><span class="sq">3</span><span><span class="tt">Design a Company</span><span class="pg" data-prog="s3"></span></span></button></li>
+        <li><button type="button" data-go="s4" data-stepbtn="s4"><span class="sq">4</span><span><span class="tt">Create a Digital Brand Board</span><span class="pg" data-prog="s4"></span></span></button></li>
+        <li><button type="button" data-go="s5" data-stepbtn="s5"><span class="sq">5</span><span><span class="tt">Design a Physical Brand Board</span><span class="pg" data-prog="s5"></span></span></button></li>
+        <li><button type="button" data-go="s6" data-stepbtn="s6"><span class="sq">6</span><span><span class="tt">Make a Presentation and Present</span><span class="pg" data-prog="s6"></span></span></button></li>
+      </ol>
+      <p class="rublink"><button type="button" class="btn yellow small" onclick="go('rubrics')">Link to Rubric Page</button></p>
+      <div class="overall">
+        <div class="lab" id="ov-lab">Your checklist progress</div>
+        <div class="meter" role="progressbar" aria-labelledby="ov-lab" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="ov-meter"><i id="ov-fill"></i></div>
+        <p class="sub" id="ov-sub"></p>
+        <button type="button" class="btn white small" id="ov-reset">Clear my checkmarks</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="band yellow groups">
+    <div class="wrap">
+      <div class="box">
+        <h2>Let's begin with groups!</h2>
+        <p>You will be assigned your groups now.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band cream qlinks" id="ql" aria-labelledby="ql-h">
+    <div class="wrap">
+      <h2 id="ql-h">All the links in one place</h2>
+      <p class="lead">Every worksheet, rubric, and video for this project. Links open in a new tab.</p>
+      <div class="qgrid">
+        <div class="qcol"><h3>Worksheets</h3><ul>
+          <li><a href="https://docs.google.com/document/d/1px8F4-3j_UrxrTXSoIA6B1yA-cYC0qNy-XYrcEf1_sw/edit?usp=sharing" target="_blank" rel="noopener noreferrer"><svg aria-hidden="true"><use href="#i-ext"/></svg>Brainstorm worksheet (Step 1)</a></li>
+          <li><a href="https://docs.google.com/document/d/1iGT3af8UghB_hN-C3IjJKuIzHUeUaabnFsr03aLsnYo/edit?usp=sharing" target="_blank" rel="noopener noreferrer"><svg aria-hidden="true"><use href="#i-ext"/></svg>Interview worksheet (Step 1)</a></li>
+        </ul></div>
+        <div class="qcol"><h3>Rubrics</h3><ul>
+          <li><a href="https://docs.google.com/document/d/1DLrM0DwLxBvcgzVCa2bAIfW71fDRovEHvPtVER0DU4Y/edit?usp=sharing" target="_blank" rel="noopener noreferrer"><svg aria-hidden="true"><use href="#i-ext"/></svg>Step 1 Rubric</a></li>
+          <li><a href="https://docs.google.com/document/d/1OxcJvxm17-SK_7lrMS4aLOUaQOUzew5K834qFmnqvNk/edit?usp=sharing" target="_blank" rel="noopener noreferrer"><svg aria-hidden="true"><use href="#i-ext"/></svg>Step 2 Rubric</a></li>
+          <li><a href="https://docs.google.com/document/d/1OHf7N2mTjNkyRHcZdYLyn1uF8JiFUQ01w_pTqv6lEck/edit?usp=sharing" target="_blank" rel="noopener noreferrer"><svg aria-hidden="true"><use href="#i-ext"/></svg>Step 3 Rubric</a></li>
+          <li><a href="https://docs.google.com/document/d/1KsoYSwZIoJf0mY6gfPLZnr6W6NdKykTIeP1ioZfziDc/edit?usp=sharing" target="_blank" rel="noopener noreferrer"><svg aria-hidden="true"><use href="#i-ext"/></svg>Step 4 Rubric</a></li>
+          <li><a href="https://docs.google.com/document/d/1NzctpvVElelYPYH59BfuNcMIXTaFltmk61cR4p4LmUU/edit?usp=sharing" target="_blank" rel="noopener noreferrer"><svg aria-hidden="true"><use href="#i-ext"/></svg>Step 5 Rubric</a></li>
+          <li><a href="https://docs.google.com/document/d/17DCMsE8MqdlGoWNauqAc7exgecNhMiOSSEEZ3P9yfb8/edit?usp=sharing" target="_blank" rel="noopener noreferrer"><svg aria-hidden="true"><use href="#i-ext"/></svg>Step 6 Rubric</a></li>
+        </ul></div>
+        <div class="qcol"><h3>Video</h3><ul>
+          <li><a href="https://www.youtube.com/watch?v=ae5MssJ8en4" target="_blank" rel="noopener noreferrer"><svg aria-hidden="true"><use href="#i-ext"/></svg>Shark Tank pitch (Step 6)</a></li>
+        </ul></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============================ STEP 1 ============================ -->
+<div class="view" id="view-s1" tabindex="-1">
+  <header class="shead teal">
+    <div class="wrap">
+      <div class="bignum" aria-hidden="true">1</div>
+      <div class="meta">
+        <h1>Step 1: Brainstorm and Research</h1>
+        <p class="sum">Find a problem worth solving, then learn what already exists.</p>
+        <div class="prog"><div class="lab" data-proglab="s1"></div><div class="meter"><i data-progfill="s1"></i></div></div>
+      </div>
+    </div>
+  </header>
+
+  <section class="band tight">
+    <div class="wrap">
+      <ul class="glance">
+        <li><button type="button" onclick="goTo('s1','s1a')"><span class="sq">1</span><span><span class="tt">Brainstorm Ideas</span><span class="ds">Think of a problem people face in daily life that could be solved.</span></span></button></li>
+        <li><button type="button" onclick="goTo('s1','s1b')"><span class="sq">2</span><span><span class="tt">Fill out Worksheet</span><span class="ds">Fill out the assigned worksheet as a group and submit it via Canvas.</span></span></button></li>
+        <li><button type="button" onclick="goTo('s1','s1c')"><span class="sq">3</span><span><span class="tt">Research and Interview</span><span class="ds">Ask at least 3 people what they think of your idea (family, friends, teachers, community members).</span></span></button></li>
+        <li><button type="button" onclick="goTo('s1','s1d')"><span class="sq">4</span><span><span class="tt">Record your findings</span><span class="ds">Fill out the assigned interview worksheet for your different interviews and submit via Canvas.</span></span></button></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="band teal" id="s1a">
+    <div class="wrap">
+      <div class="lblbar"><div class="lbl"><span class="tag y">1A</span><h2>Step 1.1: Brainstorm Ideas</h2></div></div>
+      <p class="sub-intro" style="color:var(--brown)">Think of problems that people face in daily life that could be solved with some innovation.</p>
+      <div class="cols2">
+        <div class="blk">
+          <h3>Ask yourself</h3>
+          <ul>
+            <li>What problems do people face every day?</li>
+            <li>What products or services do I wish existed?</li>
+            <li>What frustrates me that could be fixed with a simple idea?</li>
+            <li>What’s something people already use that could be improved?</li>
+            <li>What hobbies, interests, or trends inspire me right now?</li>
+          </ul>
+        </div>
+        <div class="blk">
+          <h3>Guidelines</h3>
+          <ul>
+            <li>You can create any kind of business.</li>
+            <li>You <b>cannot</b> copy an existing business or product exactly.</li>
+            <li>If your idea is similar to something that exists, you must explain what makes yours unique or better.</li>
+          </ul>
+        </div>
+      </div>
+      <ul class="tasks boxed" style="background:#fff">
+        <li class="th">Check it off when your group is done</li>
+        <li><label class="task"><input type="checkbox" data-id="s1-problem"><span class="box"><svg aria-hidden="true" viewBox="0 0 24 24"><use href="#i-check"/></svg></span><span class="tt">Pick a problem people face in daily life that your group could solve</span></label></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="band tight" id="s1b">
+    <div class="wrap">
+      <div class="lblbar"><div class="lbl"><span class="tag y">1B</span><h2>Step 1.1: Fill out the Brainstorm Worksheet</h2></div><div class="aib l0" role="img" aria-label="AI level 0: AI Free"><div class="top"><span class="n">0</span></div><div class="bot">AI Free<svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"/></svg></div></div></div>
+      <p class="sub-intro">Fill out this worksheet as a group and turn it into the assignment on Canvas!</p>
+      <div class="linkcard"><div class="t">Brainstorm worksheet<small>Google Doc. Opens in a new tab.</small></div><a class="btn" href="https://docs.google.com/document/d/1px8F4-3j_UrxrTXSoIA6B1yA-cYC0qNy-XYrcEf1_sw/edit?usp=sharing" target="_blank" rel="noopener noreferrer">Open the worksheet<svg aria-hidden="true"><use href="#i-ext"/></svg></a></div>
+      <ul class="tasks boxed">
+        <li class="th">Check it off when your group is done</li>
+        <li><label class="task"><input type="checkbox" data-id="s1-ws1"><span class="box"><svg aria-hidden="true" viewBox="0 0 24 24"><use href="#i-check"/></svg></span><span class="tt">Fill out the brainstorm worksheet as a group and turn it in on Canvas</span></label></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="band yellow" id="s1c">
+    <div class="wrap">
+      <div class="lblbar"><div class="lbl"><span class="tag t">1C</span><h2>Step 1.2: Research and Interview</h2></div></div>
+      <p class="sub-intro">This step helps you think like a real entrepreneur by learning what your audience wants and what already exists.</p>
+      <div class="blk">
+        <ol>
+          <li>Look up 3+ examples of similar products or ideas.</li>
+          <li>Ask:
+            <ol type="a"><li>What do they do well?</li><li>What’s missing?</li><li>How is mine different?</li></ol>
+          </li>
+          <li>Take brief notes on your findings and sources.</li>
+          <li>Fill out the worksheet in the next part (1D).</li>
+          <li>Use what you learn to revise or improve your blueprint before moving on!</li>
+        </ol>
+      </div>
+      <div class="callout teal"><svg aria-hidden="true" style="color:var(--brown)"><use href="#i-warn"/></svg><span>Ask at least 3 people what they think of your idea. Try family, friends, teachers, or community members.</span></div>
+      <ul class="tasks boxed" style="background:#fff">
+        <li class="th">Check it off when your group is done</li>
+        <li><label class="task"><input type="checkbox" data-id="s1-research"><span class="box"><svg aria-hidden="true" viewBox="0 0 24 24"><use href="#i-check"/></svg></span><span class="tt">Look up 3 or more examples of similar products or ideas</span></label></li>
+        <li><label class="task"><input type="checkbox" data-id="s1-interviews"><span class="box"><svg aria-hidden="true" viewBox="0 0 24 24"><use href="#i-check"/></svg></span><span class="tt">Ask at least 3 people what they think of your idea</span></label></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="band tight" id="s1d">
+    <div class="wrap">
+      <div class="lblbar"><div class="lbl"><span class="tag t">1D</span><h2>Step 1.2: Fill out the Interview Worksheet</h2></div><div class="aib l0" role="img" aria-label="AI level 0: AI Free"><div class="top"><span class="n">0</span></div><div class="bot">AI Free<svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"/></svg></div></div></div>
+      <p class="sub-intro">Fill out this worksheet as a group and turn it into the assignment on Canvas!</p>
+      <div class="linkcard"><div class="t">Interview worksheet<small>Google Doc. Opens in a new tab.</small></div><a class="btn" href="https://docs.google.com/document/d/1iGT3af8UghB_hN-C3IjJKuIzHUeUaabnFsr03aLsnYo/edit?usp=sharing" target="_blank" rel="noopener noreferrer">Open the worksheet<svg aria-hidden="true"><use href="#i-ext"/></svg></a></div>
+      <ul class="tasks boxed">
+        <li class="th">Check it off when your group is done</li>
+        <li><label class="task"><input type="checkbox" data-id="s1-ws2"><span class="box"><svg aria-hidden="true" viewBox="0 0 24 24"><use href="#i-check"/></svg></span><span class="tt">Fill out the interview worksheet as a group and turn it in on Canvas</span></label></li>
+      </ul>
+      <div class="linkcard"><div class="t">Step 1 Rubric<small>See how this step is graded.</small></div><a class="btn yellow" href="https://docs.google.com/document/d/1DLrM0DwLxBvcgzVCa2bAIfW71fDRovEHvPtVER0DU4Y/edit?usp=sharing" target="_blank" rel="noopener noreferrer">Open the rubric<svg aria-hidden="true"><use href="#i-ext"/></svg></a></div>
+      <div class="pager"><button type="button" class="btn white small" onclick="go('home')">Back to home</button><button type="button" class="btn small" onclick="go('s2')">Next: Step 2</button></div>
+    </div>
+  </section>
+</div>
+
+<!-- ============================ STEP 2 ============================ -->
+<div class="view" id="view-s2" tabindex="-1">
+  <header class="shead yellow">
+    <div class="wrap">
+      <div class="bignum" aria-hidden="true">2</div>
+      <div class="meta">
+        <h1>Step 2: Design an Initial Mock-Up</h1>
+        <p class="sum">Explain your idea in writing, then show it in a drawing.</p>
+        <div class="prog"><div class="lab" data-proglab="s2"></div><div class="meter"><i data-progfill="s2"></i></div></div>
+      </div>
+    </div>
+  </header>
+
+  <section class="band tight">
+    <div class="wrap">
+      <ul class="glance">
+        <li><button type="button" onclick="goTo('s2','s2a')"><span class="sq">A</span><span><span class="tt">Write a Product Proposal</span><span class="ds">You will write a 1 page proposal talking about the problem that you are solving and why.</span></span></button></li>
+        <li><button type="button" onclick="goTo('s2','s2b')"><span class="sq">B</span><span><span class="tt">Create Sketches and Diagrams</span><span class="ds">You will create rough sketches for your design as well as an online “Blueprint”.</span></span></button></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="band teal" id="s2a">
+    <div class="wrap">
+      <div class="lblbar"><div class="lbl"><span class="tag y">2A</span><h2>Step 2.1: Write a Product Proposal</h2></div><div class="aib l0" role="img" aria-label="AI level 0: AI Free"><div class="top"><span class="n">0</span></div><div class="bot">AI Free<svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"/></svg></div></div></div>
+      <p class="sub-intro" style="color:var(--brown)">You and your team will be creating a 1-page typed “proposal” for your company. It will include 5 paragraphs. Each paragraph is going to define a different part of your company.</p>
+      <ol class="numlist">
+        <li><div><h3>Business Overview (The What)</h3><ul><li>What is your product, service, or invention?</li><li>How does it work or what does it do?</li><li>Who is your target audience (who would buy or use it)?</li></ul></div></li>
+        <li><div><h3>Purpose and Problem (The Why)</h3><ul><li>What problem does your idea solve, or what need does it fill?</li><li>Why is this problem worth solving?</li><li>How will your idea make life easier, better, or more fun for people?</li></ul></div></li>
+        <li><div><h3>Originality (The Difference)</h3><ul><li>What makes your idea unique or better than similar ideas that already exist?</li><li>How does your idea stand out from the competition?</li><li>If something similar exists, what’s your twist or improvement?</li></ul></div></li>
+        <li><div><h3>Team Vision (The Who)</h3><ul><li>Who is in your group and what are each person’s main roles?</li><li>How will your team work together to make this project successful?</li></ul></div></li>
+        <li><div><h3>Next Steps (The Plan)</h3><ul><li>What’s the next thing your team will work on to bring this idea to life (for example: designing a prototype, creating visuals, making your brand board)?</li></ul></div></li>
+      </ol>
+      <div class="blk" style="margin-top:1.4rem">
+        <h3>Formatting tips</h3>
+        <ul>
+          <li>Must be at least one full page (or around 4 to 5 well-developed paragraphs).</li>
+          <li>Use clear, professional language. You can imagine you are pitching your idea to real investors.</li>
+          <li>Each team member’s name should be listed at the top.</li>
+          <li>Be creative!</li>
+        </ul>
+      </div>
+      <ul class="tasks boxed" style="background:#fff">
+        <li class="th">Check it off when your group is done</li>
+        <li><label class="task"><input type="checkbox" data-id="s2-proposal"><span class="box"><svg aria-hidden="true" viewBox="0 0 24 24"><use href="#i-check"/></svg></span><span class="tt">Write the 1-page product proposal with all 5 paragraphs and every team member’s name at the top</span></label></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="band yellow" id="s2b">
+    <div class="wrap">
+      <div class="lblbar"><div class="lbl"><span class="tag">2B</span><h2>Step 2.2: Create a Sketch or Blueprint</h2></div><div class="aib l2" role="img" aria-label="AI level 2: AI Feedback"><div class="top"><span class="n">2</span></div><div class="bot">AI Feedback<svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"/></svg></div></div></div>
+      <div class="cols2">
+        <div class="blk">
+          <h3>What is a Blueprint?</h3>
+          <p>A blueprint is a detailed plan or drawing that shows your product’s design, parts, and purpose. It helps others understand how your idea would actually look and function in real life.</p>
+        </div>
+        <div class="blk">
+          <h3>Your Blueprint Must Include</h3>
+          <ol>
+            <li><b>Labeled Diagram</b>
+              <ul><li>Draw or digitally design your product.</li><li>Label all important parts, features, or sections.</li><li>Use arrows, callouts, or notes to explain how things work.</li></ul></li>
+            <li><b>Function Notes</b>: Under your drawing, write 3 to 5 short sentences explaining:
+              <ul><li>How your product functions or operates.</li><li>What materials or technology it might use.</li><li>How it helps your target user or solves a problem.</li></ul></li>
+            <li><b>Design Details</b>: Include information such as:
+              <ul><li>Size or dimensions (approximate if needed)</li><li>Colors or materials</li><li>Moving parts, buttons, screens, sensors, etc.</li></ul></li>
+            <li><b>Optional Digital Add-Ons</b>: If creating digitally, you may add:
+              <ul><li>Icons or mock buttons</li><li>Text boxes or arrows</li><li>Color highlights for key features</li></ul></li>
+          </ol>
+        </div>
+      </div>
+      <ul class="tasks boxed" style="background:#fff">
+        <li class="th">Check it off when your group is done</li>
+        <li><label class="task"><input type="checkbox" data-id="s2-blueprint"><span class="box"><svg aria-hidden="true" viewBox="0 0 24 24"><use href="#i-check"/></svg></span><span class="tt">Finish the blueprint with a labeled diagram, function notes, and design details</span></label></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="band tight">
+    <div class="wrap">
+      <div class="linkcard"><div class="t">Step 2 Rubric<small>See how this step is graded.</small></div><a class="btn yellow" href="https://docs.google.com/document/d/1OxcJvxm17-SK_7lrMS4aLOUaQOUzew5K834qFmnqvNk/edit?usp=sharing" target="_blank" rel="noopener noreferrer">Open the rubric<svg aria-hidden="true"><use href="#i-ext"/></svg></a></div>
+      <div class="pager"><button type="button" class="btn white small" onclick="go('s1')">Back: Step 1</button><button type="button" class="btn small" onclick="go('s3')">Next: Step 3</button></div>
+    </div>
+  </section>
+</div>
+
+<!-- ============================ STEP 3 ============================ -->
+<div class="view" id="view-s3" tabindex="-1">
+  <header class="shead teal">
+    <div class="wrap">
+      <div class="bignum" aria-hidden="true">3</div>
+      <div class="meta">
+        <h1>Step 3: Design a Company</h1>
+        <p class="sum">For this step, in a Google doc, you will grow your company to have 4 main parts.</p>
+        <div class="prog"><div class="lab" data-proglab="s3"></div><div class="meter"><i data-progfill="s3"></i></div></div>
+      </div>
+      <div class="aib l1" role="img" aria-label="AI level 1: AI Planning"><div class="top"><span class="n">1</span></div><div class="bot">AI Planning<svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"/></svg></div></div>
+    </div>
+  </header>
+
+  <section class="band tight" id="s3parts">
+    <div class="wrap">
+      <div class="cols2">
+        <div class="blk" id="s3name" style="border-top:12px solid var(--teal)">
+          <h3>Name</h3>
+          <ul>
+            <li>Choose a name that matches your product and its purpose.</li>
+            <li>It should be short, creative, and easy to remember.</li>
+            <li>Avoid names that copy real companies.</li>
+          </ul>
+        </div>
+        <div class="blk" id="s3motto" style="border-top:12px solid var(--teal)">
+          <h3>Motto</h3>
+          <ul>
+            <li>Write a short phrase (5 to 8 words) that captures your company’s mission or attitude.</li>
+            <li>It should make people remember your brand and what it stands for.</li>
+          </ul>
+          <div class="tool">
+            <label class="tl" for="motto-in">Motto word counter</label>
+            <input type="text" id="motto-in" maxlength="140" autocomplete="off" spellcheck="true" placeholder="Type a motto to count its words">
+            <div class="res" id="motto-res" role="status" aria-live="polite"></div>
+            <div class="nt">Nothing you type here is saved or sent anywhere.</div>
+          </div>
+        </div>
+        <div class="blk" id="s3mission" style="border-top:12px solid var(--teal)">
+          <h3>Mission Statement</h3>
+          <p>Write 3 to 5 sentences explaining why your company exists and what it believes in. You can include:</p>
+          <ul>
+            <li>The problem you want to solve</li>
+            <li>The values your company stands for (innovation, sustainability, creativity, etc.)</li>
+            <li>Your company’s overall goal</li>
+          </ul>
+          <div class="tool">
+            <label class="tl" for="mission-in">Mission sentence counter</label>
+            <textarea id="mission-in" maxlength="1200" spellcheck="true" placeholder="Type a draft to count its sentences"></textarea>
+            <div class="res" id="mission-res" role="status" aria-live="polite"></div>
+            <div class="nt">Nothing you type here is saved or sent anywhere.</div>
+          </div>
+        </div>
+        <div class="blk" id="s3colors" style="border-top:12px solid var(--teal)">
+          <h3>Color Scheme</h3>
+          <ul>
+            <li>Pick 3 to 4 main colors that represent your brand.</li>
+            <li>Think about what feelings or ideas those colors communicate:</li>
+          </ul>
+          <ul class="swatches">
+            <li><span class="sw" style="background:#1f5fd1"></span><span>Blue<small>trust, reliability</small></span></li>
+            <li><span class="sw" style="background:#d62828"></span><span>Red<small>energy, excitement</small></span></li>
+            <li><span class="sw" style="background:#2e9e4f"></span><span>Green<small>nature, growth</small></span></li>
+            <li><span class="sw" style="background:#faeb37"></span><span>Yellow<small>happiness, optimism</small></span></li>
+            <li><span class="sw" style="background:linear-gradient(135deg,#111 50%,#fff 50%)"></span><span>Black/White<small>luxury</small></span></li>
+          </ul>
+        </div>
+      </div>
+      <ul class="tasks boxed">
+        <li class="th">Check off each part as your group finishes it</li>
+        <li><label class="task"><input type="checkbox" data-id="s3-name"><span class="box"><svg aria-hidden="true" viewBox="0 0 24 24"><use href="#i-check"/></svg></span><span class="tt">Name: short, creative, easy to remember, and not a copy of a real company</span></label></li>
+        <li><label class="task"><input type="checkbox" data-id="s3-motto"><span class="box"><svg aria-hidden="true" viewBox="0 0 24 24"><use href="#i-check"/></svg></span><span class="tt">Motto: a short phrase of 5 to 8 words</span></label></li>
+        <li><label class="task"><input type="checkbox" data-id="s3-mission"><span class="box"><svg aria-hidden="true" viewBox="0 0 24 24"><use href="#i-check"/></svg></span><span class="tt">Mission statement: 3 to 5 sentences</span></label></li>
+        <li><label class="task"><input type="checkbox" data-id="s3-colors"><span class="box"><svg aria-hidden="true" viewBox="0 0 24 24"><use href="#i-check"/></svg></span><span class="tt">Color scheme: 3 to 4 main colors</span></label></li>
+      </ul>
+      <div class="linkcard"><div class="t">Step 3 Rubric<small>See how this step is graded.</small></div><a class="btn yellow" href="https://docs.google.com/document/d/1OHf7N2mTjNkyRHcZdYLyn1uF8JiFUQ01w_pTqv6lEck/edit?usp=sharing" target="_blank" rel="noopener noreferrer">Open the rubric<svg aria-hidden="true"><use href="#i-ext"/></svg></a></div>
+      <div class="pager"><button type="button" class="btn white small" onclick="go('s2')">Back: Step 2</button><button type="button" class="btn small" onclick="go('s4')">Next: Step 4</button></div>
+    </div>
+  </section>
+</div>
+
+<!-- ============================ STEP 4 ============================ -->
+<div class="view" id="view-s4" tabindex="-1">
+  <header class="shead yellow">
+    <div class="wrap">
+      <div class="bignum" aria-hidden="true">4</div>
+      <div class="meta">
+        <h1>Step 4: Design a Digital Brand Board</h1>
+        <p class="sum">Pull your company’s whole look together on one page.</p>
+        <div class="prog"><div class="lab" data-proglab="s4"></div><div class="meter"><i data-progfill="s4"></i></div></div>
+      </div>
+      <div class="aib l2" role="img" aria-label="AI level 2: AI Feedback"><div class="top"><span class="n">2</span></div><div class="bot">AI Feedback<svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"/></svg></div></div>
+    </div>
+  </header>
+
+  <section class="band tight" id="s4what">
+    <div class="wrap">
+      <div class="lblbar"><div class="lbl"><h2>Directions for Step 4: What to include</h2></div></div>
+      <ol class="numlist">
+        <li><div><h3>Company Name</h3><ul><li>Include your official company name at the top of your brand board.</li><li>Make it clear, legible, and consistent with your branding.</li></ul></div></li>
+        <li><div><h3>Motto / Slogan</h3><ul><li>Include your company’s motto or slogan.</li></ul></div></li>
+        <li><div><h3>Mission Statement / Company Reason</h3></div></li>
+        <li><div><h3>Logos (3 versions)</h3><p>Design three versions of your logo:</p><ul><li><b>Main Logo:</b> Your full official logo with company name and tagline.</li><li><b>Simple Logo:</b> A version with just the symbol or icon, no words.</li><li><b>Rectangle Logo:</b> A horizontal or long rectangular version, suitable for banners or website headers.</li></ul><p>All logos should be consistent in style and color.</p></div></li>
+        <li><div><h3>Fonts</h3><ul><li>Define your primary font (for headings) and secondary font (for body text or smaller descriptions).</li><li>Show how the fonts look on the brand board.</li></ul></div></li>
+        <li><div><h3>Color Palette</h3><ul><li>Include your full brand color palette (3 to 4 main colors plus any accent colors).</li><li>Label each color clearly (name or HEX code).</li><li>Make sure your colors match your logos and overall brand identity.</li></ul></div></li>
+        <li><div><h3>Promotional Item</h3><ul><li>Include a visual of a promotional item with your logo. Examples: water bottle, t-shirt, mug, bag, or poster.</li><li>This can be hand-drawn, digitally created, or a photo mock-up.</li><li>Show how your logo and colors appear in a real-world product.</li></ul></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="band yellow" id="s4format">
+    <div class="wrap">
+      <div class="cols2">
+        <div class="blk">
+          <h3>Format and presentation</h3>
+          <ul>
+            <li>All elements should fit on one page.</li>
+            <li>Layout should be neat, visually appealing, and easy to read.</li>
+            <li>Be creative but professional. This is your company’s “official brand board.”</li>
+          </ul>
+        </div>
+        <div>
+          <div class="callout orange"><svg aria-hidden="true" style="color:var(--brown)"><use href="#i-warn"/></svg><span>THIS MUST BE ON 1 PAGE</span></div>
+          <div class="callout teal"><svg aria-hidden="true" style="color:var(--brown)"><use href="#i-warn"/></svg><span>Please use Canva for this step and download it as a PDF.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band tight" id="s4guide">
+    <div class="wrap">
+      <div class="lblbar"><div class="lbl"><h2>One way the pieces can fit on one page</h2></div></div>
+      <p class="fine" style="max-width:40em">The numbers match the list above. Your layout can look different. Just keep everything on one page.</p>
+      <div class="bb" role="img" aria-label="Layout guide for a one-page brand board. Numbered 1 to 7: company name at the top, then motto and mission statement, three logos, fonts, color palette, and a promotional item.">
+        <div class="a"><span class="no">1</span>Company name</div>
+        <div class="b"><span class="no">2</span>Motto or slogan</div>
+        <div class="c"><span class="no">3</span>Mission statement</div>
+        <div class="d1"><span class="no">4</span>Main logo</div>
+        <div class="d2"><span class="no">4</span>Simple logo</div>
+        <div class="d3"><span class="no">4</span>Rectangle logo</div>
+        <div class="e"><span class="no">5</span>Fonts</div>
+        <div class="f"><span class="no">6</span>Color palette<span class="pal"><i style="background:#18b7ae"></i><i style="background:#ea591c"></i><i style="background:#faeb37"></i><i style="background:#4e2507"></i></span></div>
+        <div class="g"><span class="no">7</span>Promotional item</div>
+      </div>
+      <ul class="tasks boxed">
+        <li class="th">Check off each part as it goes on your brand board</li>
+        <li><label class="task"><input type="checkbox" data-id="s4-name"><span class="box"><svg aria-hidden="true" viewBox="0 0 24 24"><use href="#i-check"/></svg></span><span class="tt">Company name at the top, clear and legible</span></label></li>
+        <li><label class="task"><input type="checkbox" data-id="s4-motto"><span class="box"><svg aria-hidden="true" viewBox="0 0 24 24"><use href="#i-check"/></svg></span><span class="tt">Motto or slogan</span></label></li>
+        <li><label class="task"><input type="checkbox" data-id="s4-mission"><span class="box"><svg aria-hidden="true" viewBox="0 0 24 24"><use href="#i-check"/></svg></span><span class="tt">Mission statement or company reason</span></label></li>
+        <li><label class="task"><input type="checkbox" data-id="s4-logos"><span class="box"><svg aria-hidden="true" viewBox="0 0 24 24"><use href="#i-check"/></svg></span><span class="tt">Three logos: main, simple, and rectangle, all consistent in style and color</span></label></li>
+        <li><label class="task"><input type="checkbox" data-id="s4-fonts"><span class="box"><svg aria-hidden="true" viewBox="0 0 24 24"><use href="#i-check"/></svg></span><span class="tt">Primary font and secondary font, shown on the board</span></label></li>
+        <li><label class="task"><input type="checkbox" data-id="s4-palette"><span class="box"><svg aria-hidden="true" viewBox="0 0 24 24"><use href="#i-check"/></svg></span><span class="tt">Color palette with each color labeled by name or HEX code</span></label></li>
+        <li><label class="task"><input type="checkbox" data-id="s4-promo"><span class="box"><svg aria-hidden="true" viewBox="0 0 24 24"><use href="#i-check"/></svg></span><span class="tt">Promotional item showing your logo and colors</span></label></li>
+        <li><label class="task"><input type="checkbox" data-id="s4-onepage"><span class="box"><svg aria-hidden="true" viewBox="0 0 24 24"><use href="#i-check"/></svg></span><span class="tt">Everything fits on one page and the layout is neat</span></label></li>
+        <li><label class="task"><input type="checkbox" data-id="s4-pdf"><span class="box"><svg aria-hidden="true" viewBox="0 0 24 24"><use href="#i-check"/></svg></span><span class="tt">Made in Canva and downloaded as a PDF</span></label></li>
+      </ul>
+      <div class="linkcard"><div class="t">Step 4 Rubric<small>See how this step is graded.</small></div><a class="btn yellow" href="https://docs.google.com/document/d/1KsoYSwZIoJf0mY6gfPLZnr6W6NdKykTIeP1ioZfziDc/edit?usp=sharing" target="_blank" rel="noopener noreferrer">Open the rubric<svg aria-hidden="true"><use href="#i-ext"/></svg></a></div>
+      <div class="pager"><button type="button" class="btn white small" onclick="go('s3')">Back: Step 3</button><button type="button" class="btn small" onclick="go('s5')">Next: Step 5</button></div>
+    </div>
+  </section>
+</div>
+
+<!-- ============================ STEP 5 ============================ -->
+<div class="view" id="view-s5" tabindex="-1">
+  <header class="shead teal">
+    <div class="wrap">
+      <div class="bignum" aria-hidden="true">5</div>
+      <div class="meta">
+        <h1>Step 5: Design a Physical Brand Board</h1>
+        <p class="sum">Take your digital brand board and build it for real.</p>
+        <div class="prog"><div class="lab" data-proglab="s5"></div><div class="meter"><i data-progfill="s5"></i></div></div>
+      </div>
+    </div>
+  </header>
+
+  <section class="band tight">
+    <div class="wrap">
+      <ul class="glance">
+        <li><button type="button" onclick="goTo('s5','s5a')"><span class="sq">5A</span><span><span class="tt">5.1 A Physical Brand Board</span><span class="ds">Poster board or trifold board, using the same criteria as your digital brand board.</span></span></button></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="band yellow" id="s5a">
+    <div class="wrap">
+      <div class="lblbar"><div class="lbl"><span class="tag t">5A</span><h2>Step 5: Design a Physical Brand Board</h2></div><div class="aib l0" role="img" aria-label="AI level 0: AI Free"><div class="top"><span class="n">0</span></div><div class="bot">AI Free<svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"/></svg></div></div></div>
+      <div class="cols2">
+        <div class="blk">
+          <h3>Design Requirements</h3>
+          <ul>
+            <li>Must be on a poster board or trifold board (22" x 28" or similar size).</li>
+            <li>Everything should be neat, colorful, and visually balanced.</li>
+            <li>Use consistent colors, fonts, and spacing throughout.</li>
+            <li>Typed text is preferred, but neat handwriting is acceptable.</li>
+            <li>Be creative, but keep it professional and easy to read from a distance.</li>
+          </ul>
+        </div>
+        <div class="blk">
+          <h3>What to know</h3>
+          <p>This will be done on a physical poster board or tri-fold board. You will be allowed to use Cricut and all supplies needed to succeed.</p>
+          <p>It should follow the same criteria as your digital brand board but is now in physical form.</p>
+          <p style="margin-top:.9rem"><button type="button" class="btn small white" onclick="goTo('s4','s4what')">Review the Step 4 criteria</button></p>
+        </div>
+      </div>
+      <ul class="tasks boxed" style="background:#fff">
+        <li class="th">Check off each requirement as your board meets it</li>
+        <li><label class="task"><input type="checkbox" data-id="s5-board"><span class="box"><svg aria-hidden="true" viewBox="0 0 24 24"><use href="#i-check"/></svg></span><span class="tt">On a poster board or trifold board (22" x 28" or similar size)</span></label></li>
+        <li><label class="task"><input type="checkbox" data-id="s5-neat"><span class="box"><svg aria-hidden="true" viewBox="0 0 24 24"><use href="#i-check"/></svg></span><span class="tt">Neat, colorful, and visually balanced</span></label></li>
+        <li><label class="task"><input type="checkbox" data-id="s5-consistent"><span class="box"><svg aria-hidden="true" viewBox="0 0 24 24"><use href="#i-check"/></svg></span><span class="tt">Consistent colors, fonts, and spacing throughout</span></label></li>
+        <li><label class="task"><input type="checkbox" data-id="s5-typed"><span class="box"><svg aria-hidden="true" viewBox="0 0 24 24"><use href="#i-check"/></svg></span><span class="tt">Typed text if possible, or neat handwriting</span></label></li>
+        <li><label class="task"><input type="checkbox" data-id="s5-readable"><span class="box"><svg aria-hidden="true" viewBox="0 0 24 24"><use href="#i-check"/></svg></span><span class="tt">Professional and easy to read from a distance</span></label></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="band tight">
+    <div class="wrap">
+      <div class="linkcard"><div class="t">Step 5 Rubric<small>See how this step is graded.</small></div><a class="btn yellow" href="https://docs.google.com/document/d/1NzctpvVElelYPYH59BfuNcMIXTaFltmk61cR4p4LmUU/edit?usp=sharing" target="_blank" rel="noopener noreferrer">Open the rubric<svg aria-hidden="true"><use href="#i-ext"/></svg></a></div>
+      <div class="pager"><button type="button" class="btn white small" onclick="go('s4')">Back: Step 4</button><button type="button" class="btn small" onclick="go('s6')">Next: Step 6</button></div>
+    </div>
+  </section>
+</div>
+
+<!-- ============================ STEP 6 ============================ -->
+<div class="view" id="view-s6" tabindex="-1">
+  <header class="shead yellow">
+    <div class="wrap">
+      <div class="bignum" aria-hidden="true">6</div>
+      <div class="meta">
+        <h1>Step 6: Design and Present</h1>
+        <p class="sum">Your presentation should sell your company idea to the Sharks (teachers and classmates). Think like real entrepreneurs: your goal is to convince investors to support your idea!</p>
+        <div class="prog"><div class="lab" data-proglab="s6"></div><div class="meter"><i data-progfill="s6"></i></div></div>
+      </div>
+    </div>
+  </header>
+
+  <section class="band tight" id="s6video">
+    <div class="wrap">
+      <div class="video">
+        <a class="thumb" href="https://www.youtube.com/watch?v=ae5MssJ8en4" target="_blank" rel="noopener noreferrer" aria-label="Watch the Shark Tank pitch on YouTube (opens in a new tab)">
+          <span class="fallback">Watch on YouTube</span>
+          <img src="https://img.youtube.com/vi/ae5MssJ8en4/hqdefault.jpg" alt="" loading="lazy" onerror="this.style.display='none'">
+          <span class="play"><span></span></span>
+        </a>
+        <div>
+          <h3>Watch a real pitch</h3>
+          <p>A Bidding War Breaks Out During Scrub Daddy’s Pitch | Shark Tank US, from Shark Tank Global on YouTube.</p>
+          <a class="btn" href="https://www.youtube.com/watch?v=ae5MssJ8en4" target="_blank" rel="noopener noreferrer">Watch on YouTube<svg aria-hidden="true"><use href="#i-ext"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band teal" id="s6include">
+    <div class="wrap">
+      <div class="lblbar"><div class="lbl"><h2>Your Digital Presentation Must Include</h2></div><div class="aib l0" role="img" aria-label="AI level 0: AI Free"><div class="top"><span class="n">0</span></div><div class="bot">AI Free<svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"/></svg></div></div></div>
+      <ol class="numlist">
+        <li><div><h3>Company Introduction</h3><p>Name, motto, mission statement, and what you do.</p></div></li>
+        <li><div><h3>The Problem and Your Solution</h3><p>What issue or need does your company solve?</p></div></li>
+        <li><div><h3>Target Audience</h3><p>Who will use or benefit from your product?</p></div></li>
+        <li><div><h3>The Product or Service</h3><p>Show or describe your mock-up or prototype.</p></div></li>
+        <li><div><h3>What Makes You Unique</h3><p>Why is your idea better or different?</p></div></li>
+        <li><div><h3>The Ask</h3><p>What support are you asking the Sharks for (funding, marketing, help)?</p></div></li>
+      </ol>
+      <div class="blk" style="margin-top:1.4rem">
+        <h3>Tips</h3>
+        <ul>
+          <li>Keep your pitch under 5 minutes.</li>
+          <li>Everyone in your group should speak.</li>
+          <li>Practice until you sound confident and natural.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="band tight" id="s6shark">
+    <div class="wrap">
+      <div class="lblbar"><div class="lbl"><h2>How to Connect it to Shark Tank</h2></div></div>
+      <div class="cols2">
+        <div class="blk">
+          <h3>Entrepreneurs on the show</h3>
+          <ul>
+            <li>Introduce their business idea clearly.</li>
+            <li>Describe the problem and explain their solution.</li>
+            <li>Show their product prototype or a demonstration.</li>
+            <li>Share their numbers: how it works, costs, or why it’s valuable.</li>
+            <li>Make an ask for money or a partnership.</li>
+            <li>Answer questions confidently and stay professional.</li>
+          </ul>
+        </div>
+        <div class="blk">
+          <h3>In Your Presentation</h3>
+          <ul>
+            <li>You’ll show your physical brand board instead of business data.</li>
+            <li>You’ll explain your product idea, how it works, and why it matters.</li>
+            <li>You’ll make your ask (support, votes, or pretend “funding”).</li>
+            <li>You’ll use confident speaking and visuals to “wow” your Sharks!</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band yellow" id="s6pvlegs">
+    <div class="wrap">
+      <div class="lblbar"><div class="lbl"><h2>PVLEGS</h2></div></div>
+      <p class="sub-intro">Tap a card to see how to do it.</p>
+      <div class="pv-grid">
+        <button type="button" class="pv" aria-pressed="false"><span class="face front"><span class="ltr">P</span><span class="wd">Poise</span><span class="ds">Stay calm, confident, and professional.</span><span class="hint">Tap to flip</span></span><span class="face back"><span class="wd">Poise</span><span class="ds">Stand tall, smile, and handle mistakes smoothly.</span><span class="hint">Tap to flip back</span></span></button>
+        <button type="button" class="pv" aria-pressed="false"><span class="face front"><span class="ltr">V</span><span class="wd">Voice</span><span class="ds">Speak loudly and clearly.</span><span class="hint">Tap to flip</span></span><span class="face back"><span class="wd">Voice</span><span class="ds">Use expression. Don’t mumble or rush.</span><span class="hint">Tap to flip back</span></span></button>
+        <button type="button" class="pv" aria-pressed="false"><span class="face front"><span class="ltr">L</span><span class="wd">Life</span><span class="ds">Bring energy and personality.</span><span class="hint">Tap to flip</span></span><span class="face back"><span class="wd">Life</span><span class="ds">Sound excited about your product!</span><span class="hint">Tap to flip back</span></span></button>
+        <button type="button" class="pv" aria-pressed="false"><span class="face front"><span class="ltr">E</span><span class="wd">Eye Contact</span><span class="ds">Connect with your audience.</span><span class="hint">Tap to flip</span></span><span class="face back"><span class="wd">Eye Contact</span><span class="ds">Look at your Sharks, not your notes.</span><span class="hint">Tap to flip back</span></span></button>
+        <button type="button" class="pv" aria-pressed="false"><span class="face front"><span class="ltr">G</span><span class="wd">Gestures</span><span class="ds">Use your hands and body naturally.</span><span class="hint">Tap to flip</span></span><span class="face back"><span class="wd">Gestures</span><span class="ds">Point to visuals or demonstrate your product.</span><span class="hint">Tap to flip back</span></span></button>
+        <button type="button" class="pv" aria-pressed="false"><span class="face front"><span class="ltr">S</span><span class="wd">Speed</span><span class="ds">Control your pace.</span><span class="hint">Tap to flip</span></span><span class="face back"><span class="wd">Speed</span><span class="ds">Don’t rush. Pause for emphasis and clarity.</span><span class="hint">Tap to flip back</span></span></button>
+      </div>
+    </div>
+  </section>
+
+  <section class="band tight" id="s6timer">
+    <div class="wrap">
+      <div class="lblbar"><div class="lbl"><h2>Practice with the pitch timer</h2></div></div>
+      <p class="sub-intro">Keep your pitch under 5 minutes. Start the timer, practice with your group, and see where you land.</p>
+      <div class="timer" id="timer">
+        <h3>Pitch timer</h3>
+        <div class="tdisp" id="tdisp" role="timer" aria-live="off">0:00</div>
+        <div class="tbar" aria-hidden="true"><i id="tfill"></i></div>
+        <div class="tmsg" id="tmsg" role="status" aria-live="polite">Ready when you are.</div>
+        <div class="row"><button type="button" class="btn yellow" id="tgo">Start</button><button type="button" class="btn white" id="treset">Reset</button></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band teal" id="s6present">
+    <div class="wrap">
+      <div class="lblbar"><div class="lbl"><h2>Step 6, part 2: Time to Present!</h2></div><div class="aib l0" role="img" aria-label="AI level 0: AI Free"><div class="top"><span class="n">0</span></div><div class="bot">AI Free<svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"/></svg></div></div></div>
+      <ul class="tasks boxed" style="background:#fff">
+        <li class="th">Check it off as your group gets ready</li>
+        <li><label class="task"><input type="checkbox" data-id="s6-intro"><span class="box"><svg aria-hidden="true" viewBox="0 0 24 24"><use href="#i-check"/></svg></span><span class="tt">Company introduction: name, motto, mission statement, and what you do</span></label></li>
+        <li><label class="task"><input type="checkbox" data-id="s6-problem"><span class="box"><svg aria-hidden="true" viewBox="0 0 24 24"><use href="#i-check"/></svg></span><span class="tt">The problem and your solution</span></label></li>
+        <li><label class="task"><input type="checkbox" data-id="s6-audience"><span class="box"><svg aria-hidden="true" viewBox="0 0 24 24"><use href="#i-check"/></svg></span><span class="tt">Target audience</span></label></li>
+        <li><label class="task"><input type="checkbox" data-id="s6-product"><span class="box"><svg aria-hidden="true" viewBox="0 0 24 24"><use href="#i-check"/></svg></span><span class="tt">The product or service, shown with your mock-up or prototype</span></label></li>
+        <li><label class="task"><input type="checkbox" data-id="s6-unique"><span class="box"><svg aria-hidden="true" viewBox="0 0 24 24"><use href="#i-check"/></svg></span><span class="tt">What makes you unique</span></label></li>
+        <li><label class="task"><input type="checkbox" data-id="s6-ask"><span class="box"><svg aria-hidden="true" viewBox="0 0 24 24"><use href="#i-check"/></svg></span><span class="tt">The ask: what support you want from the Sharks</span></label></li>
+        <li><label class="task"><input type="checkbox" data-id="s6-time"><span class="box"><svg aria-hidden="true" viewBox="0 0 24 24"><use href="#i-check"/></svg></span><span class="tt">Pitch is under 5 minutes</span></label></li>
+        <li><label class="task"><input type="checkbox" data-id="s6-everyone"><span class="box"><svg aria-hidden="true" viewBox="0 0 24 24"><use href="#i-check"/></svg></span><span class="tt">Everyone in the group speaks</span></label></li>
+        <li><label class="task"><input type="checkbox" data-id="s6-practice"><span class="box"><svg aria-hidden="true" viewBox="0 0 24 24"><use href="#i-check"/></svg></span><span class="tt">Practiced until you sound confident and natural</span></label></li>
+      </ul>
+      <div class="linkcard"><div class="t">Step 6 Rubric<small>See how this step is graded.</small></div><a class="btn yellow" href="https://docs.google.com/document/d/17DCMsE8MqdlGoWNauqAc7exgecNhMiOSSEEZ3P9yfb8/edit?usp=sharing" target="_blank" rel="noopener noreferrer">Open the rubric<svg aria-hidden="true"><use href="#i-ext"/></svg></a></div>
+      <div class="pager"><button type="button" class="btn white small" onclick="go('s5')">Back: Step 5</button><button type="button" class="btn small yellow" onclick="go('rubrics')">All rubrics</button></div>
+    </div>
+  </section>
+</div>
+
+<!-- ============================ RUBRICS ============================ -->
+<div class="view" id="view-rubrics" tabindex="-1">
+  <header class="shead yellow">
+    <div class="wrap">
+      <div class="meta">
+        <h1>Rubrics</h1>
+        <p class="sum">Each step has its own rubric. Read it before you start so you know what your teacher is looking for.</p>
+      </div>
+    </div>
+  </header>
+  <section class="band tight">
+    <div class="wrap">
+      <div class="rubgrid">
+        <div class="rub"><span class="sq">1</span><h3>Step 1 Rubric</h3><p>Brainstorm and Research</p><a class="btn small" href="https://docs.google.com/document/d/1DLrM0DwLxBvcgzVCa2bAIfW71fDRovEHvPtVER0DU4Y/edit?usp=sharing" target="_blank" rel="noopener noreferrer">Open the rubric<svg aria-hidden="true"><use href="#i-ext"/></svg></a></div>
+        <div class="rub"><span class="sq">2</span><h3>Step 2 Rubric</h3><p>Design an Initial Mock-Up</p><a class="btn small" href="https://docs.google.com/document/d/1OxcJvxm17-SK_7lrMS4aLOUaQOUzew5K834qFmnqvNk/edit?usp=sharing" target="_blank" rel="noopener noreferrer">Open the rubric<svg aria-hidden="true"><use href="#i-ext"/></svg></a></div>
+        <div class="rub"><span class="sq">3</span><h3>Step 3 Rubric</h3><p>Design a Company</p><a class="btn small" href="https://docs.google.com/document/d/1OHf7N2mTjNkyRHcZdYLyn1uF8JiFUQ01w_pTqv6lEck/edit?usp=sharing" target="_blank" rel="noopener noreferrer">Open the rubric<svg aria-hidden="true"><use href="#i-ext"/></svg></a></div>
+        <div class="rub"><span class="sq">4</span><h3>Step 4 Rubric</h3><p>Design a Digital Brand Board</p><a class="btn small" href="https://docs.google.com/document/d/1KsoYSwZIoJf0mY6gfPLZnr6W6NdKykTIeP1ioZfziDc/edit?usp=sharing" target="_blank" rel="noopener noreferrer">Open the rubric<svg aria-hidden="true"><use href="#i-ext"/></svg></a></div>
+        <div class="rub"><span class="sq">5</span><h3>Step 5 Rubric</h3><p>Design a Physical Brand Board</p><a class="btn small" href="https://docs.google.com/document/d/1NzctpvVElelYPYH59BfuNcMIXTaFltmk61cR4p4LmUU/edit?usp=sharing" target="_blank" rel="noopener noreferrer">Open the rubric<svg aria-hidden="true"><use href="#i-ext"/></svg></a></div>
+        <div class="rub"><span class="sq">6</span><h3>Step 6 Rubric</h3><p>Design and Present</p><a class="btn small" href="https://docs.google.com/document/d/17DCMsE8MqdlGoWNauqAc7exgecNhMiOSSEEZ3P9yfb8/edit?usp=sharing" target="_blank" rel="noopener noreferrer">Open the rubric<svg aria-hidden="true"><use href="#i-ext"/></svg></a></div>
+      </div>
+      <div class="pager"><button type="button" class="btn white small" onclick="go('s6')">Back: Step 6</button><button type="button" class="btn small" onclick="go('home')">Back to home</button></div>
+    </div>
+  </section>
+</div>
+
+</main>
+
+<footer>
+  <div class="wrap"><b>The Start-Up Challenge</b>, DCE Fall 2025. Your checkmarks are saved only in this browser on this device.</div>
+</footer>
+
+<script>
+'use strict';
+const $ = function(id){ return document.getElementById(id); };
+const VIEWS = ['home','s1','s2','s3','s4','s5','s6','rubrics'];
+const NAMES = {
+  s1:'Brainstorm and Research', s2:'Design an Initial Mock-Up', s3:'Design a Company',
+  s4:'Design a Digital Brand Board', s5:'Design a Physical Brand Board', s6:'Design and Present'
+};
+const SHORT = {home:'Home', s1:'Step 1', s2:'Step 2', s3:'Step 3', s4:'Step 4', s5:'Step 5', s6:'Step 6', rubrics:'Rubrics'};
+function pageTitle(v){
+  if(v === 'home') return 'The Start-Up Challenge';
+  if(v === 'rubrics') return 'Rubrics';
+  return 'Step ' + v.slice(1) + ': ' + NAMES[v];
+}
+function curView(){ const a = document.querySelector('.view.active'); return a ? a.id.slice(5) : 'home'; }
+
+/* ---------------- remembering where a student was ---------------- */
+const LKEY = 'startup_challenge_last_v1';
+function saveLast(v, a){ if(v === 'home') return; try{ localStorage.setItem(LKEY, JSON.stringify({v:v, a:a || ''})); }catch(e){} }
+function readLast(){
+  try{
+    const l = JSON.parse(localStorage.getItem(LKEY) || 'null');
+    if(l && VIEWS.indexOf(l.v) > 0) return l;
+  }catch(e){}
+  return null;
+}
+function refreshContinue(){
+  const btn = $('cta-continue'), l = readLast();
+  if(!l){ btn.hidden = true; return; }
+  btn.hidden = false;
+  btn.textContent = 'Continue where you left off: ' + SHORT[l.v];
+  btn.onclick = function(){ go(l.v, l.a); };
+}
+
+/* ---------------- the menu (sidebar on computers, drawer on phones) ---------------- */
+const mqDesk = window.matchMedia ? window.matchMedia('(min-width:1180px)') : {matches:false};
+let lastOpener = null;
+function openMenu(){
+  if(mqDesk.matches) return;
+  lastOpener = document.activeElement;
+  document.body.classList.add('menu-open');
+  $('menubtn').setAttribute('aria-expanded', 'true');
+  const cur = document.querySelector('#outline .olink.sub.cur, #outline .olstep.cur > .steprow, #outline .olink.top.cur');
+  const target = cur || document.querySelector('#outline .olink');
+  if(target){
+    try{ target.focus({preventScroll:true}); }catch(e){}
+    if(target.scrollIntoView) target.scrollIntoView({block:'center'});
+  }
+}
+function closeMenu(restoreFocus){
+  if(!document.body.classList.contains('menu-open')) return;
+  document.body.classList.remove('menu-open');
+  $('menubtn').setAttribute('aria-expanded', 'false');
+  if(restoreFocus && lastOpener && lastOpener.focus){ try{ lastOpener.focus({preventScroll:true}); }catch(e){} }
+}
+
+/* ---------------- going places ---------------- */
+function syncChrome(v){
+  // top bar
+  $('navtitle').textContent = pageTitle(v);
+  // outline: current page + the open step
+  document.querySelectorAll('#outline .olink.top').forEach(function(b){
+    const on = (b.dataset.v === v && !b.dataset.a);
+    b.classList.toggle('cur', on);
+    if(on) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current');
+  });
+  document.querySelectorAll('#outline .olstep').forEach(function(li){
+    const on = (li.dataset.step === v);
+    li.classList.toggle('cur', on); li.classList.toggle('open', on);
+    const row = li.querySelector('.steprow');
+    row.setAttribute('aria-expanded', on ? 'true' : 'false');
+    if(on) row.setAttribute('aria-current', 'page'); else row.removeAttribute('aria-current');
+  });
+  document.querySelectorAll('#outline .olink.sub').forEach(function(b){ b.classList.remove('cur'); b.removeAttribute('aria-current'); });
+  // bottom bar: back / next
+  const i = VIEWS.indexOf(v);
+  const prev = i > 0 ? VIEWS[i - 1] : null;
+  const next = i < VIEWS.length - 1 ? VIEWS[i + 1] : 'home';
+  $('bb-prev').disabled = !prev;
+  $('bb-prev').dataset.to = prev || '';
+  $('bb-prev-t').textContent = prev ? SHORT[prev] : '';
+  $('bb-next').dataset.to = next;
+  $('bb-next-t').textContent = SHORT[next];
+  $('bb-mid-t').textContent = (v === 'home' || v === 'rubrics') ? SHORT[v] : 'Step ' + v.slice(1) + ' of 6';
+  if(v === 'home') refreshContinue();
+}
+function go(v, anchor, fromHistory){
+  if(VIEWS.indexOf(v) < 0) v = 'home';
+  document.querySelectorAll('.view').forEach(function(x){ x.classList.toggle('active', x.id === 'view-' + v); });
+  document.title = (v === 'home') ? pageTitle('home') : pageTitle(v) + ' | The Start-Up Challenge';
+  syncChrome(v);
+  closeMenu(false);
+  const hash = '#' + v + (anchor ? '/' + anchor : '');
+  if(!fromHistory && window.location.hash !== hash){
+    try{ history.pushState(null, '', hash); }catch(e){ try{ history.replaceState(null, '', hash); }catch(e2){} }
+  }
+  saveLast(v, anchor);
+  if(anchor){
+    requestAnimationFrame(function(){ const el = $(anchor); if(el && el.scrollIntoView) el.scrollIntoView({behavior:'smooth', block:'start'}); spy(); });
+  } else {
+    window.scrollTo({top:0, behavior:'smooth'});
+    requestAnimationFrame(spy);
+  }
+  const view = $('view-' + v);
+  if(view){ try{ view.focus({preventScroll:true}); }catch(e){} }
+}
+function goTo(v, a){ go(v, a); }
+
+/* ---------------- which part of the page am I on? ---------------- */
+function spy(){
+  const v = curView();
+  const subs = Array.prototype.slice.call(document.querySelectorAll('#ol-' + v + ' .olink.sub'));
+  let cur = null;
+  subs.forEach(function(b){
+    const el = $(b.dataset.a);
+    if(el && el.getBoundingClientRect().top <= 150) cur = b;
+  });
+  document.querySelectorAll('#outline .olink.sub').forEach(function(b){
+    const on = (b === cur);
+    b.classList.toggle('cur', on);
+    if(on) b.setAttribute('aria-current', 'location'); else b.removeAttribute('aria-current');
+  });
+}
+let scrollQueued = false;
+function onScroll(){
+  if(scrollQueued) return;
+  scrollQueued = true;
+  requestAnimationFrame(function(){
+    scrollQueued = false;
+    spy();
+    $('totop').hidden = (window.pageYOffset < 900);
+  });
+}
+
+/* ---------------- checklists + progress ---------------- */
+const TKEY = 'startup_challenge_tasks_v1';
+let done = {};
+try{ done = JSON.parse(localStorage.getItem(TKEY) || '{}') || {}; }catch(e){ done = {}; }
+function persist(){ try{ localStorage.setItem(TKEY, JSON.stringify(done)); }catch(e){} }
+function updateProgress(){
+  let total = 0, got = 0;
+  ['s1','s2','s3','s4','s5','s6'].forEach(function(s){
+    const boxes = Array.prototype.slice.call(document.querySelectorAll('#view-' + s + ' input[type=checkbox][data-id]'));
+    const n = boxes.length, d = boxes.filter(function(b){ return b.checked; }).length;
+    total += n; got += d;
+    const text = d + ' of ' + n + ' tasks done';
+    document.querySelectorAll('[data-proglab="' + s + '"]').forEach(function(e){ e.textContent = text; });
+    document.querySelectorAll('[data-progfill="' + s + '"]').forEach(function(e){ e.style.width = (n ? d / n * 100 : 0) + '%'; });
+    document.querySelectorAll('[data-prog="' + s + '"]').forEach(function(e){ e.textContent = text; });
+    const complete = n > 0 && d === n;
+    const sb = document.querySelector('[data-stepbtn="' + s + '"]');
+    if(sb){ sb.classList.toggle('done', complete); sb.querySelector('.sq').textContent = complete ? '✓' : s.slice(1); }
+    const li = document.querySelector('#outline .olstep[data-step="' + s + '"]');
+    if(li){
+      li.classList.toggle('done', complete);
+      const row = li.querySelector('.steprow');
+      row.querySelector('.sq').textContent = complete ? '✓' : s.slice(1);
+      row.querySelector('.st').textContent = complete ? 'Done' : d + '/' + n;
+      row.setAttribute('aria-label', row.dataset.lab + ', ' + text);
+    }
+  });
+  // each outline part shows a check once every task inside it is finished
+  document.querySelectorAll('#outline .olink.sub').forEach(function(b){
+    const el = $(b.dataset.a);
+    const inputs = el ? Array.prototype.slice.call(el.querySelectorAll('input[type=checkbox][data-id]')) : [];
+    const ok = inputs.length > 0 && inputs.every(function(i){ return i.checked; });
+    b.classList.toggle('ok', ok);
+    b.setAttribute('aria-label', b.dataset.lab + (ok ? ', done' : ''));
+  });
+  const pct = total ? Math.round(got / total * 100) : 0;
+  const msg = (total && got === total) ? 'Every task is checked off. Nice work!' : got + ' of ' + total + ' tasks done across all 6 steps.';
+  $('ov-fill').style.width = pct + '%';
+  $('ov-meter').setAttribute('aria-valuenow', String(pct));
+  $('ov-sub').textContent = msg;
+  $('olf-fill').style.width = pct + '%';
+  $('olf-meter').setAttribute('aria-valuenow', String(pct));
+  $('olf-sub').textContent = msg;
+  $('navprog-t').textContent = got + '/' + total;
+  $('navprog-fill').style.width = pct + '%';
+  $('navprog').setAttribute('aria-label', 'Checklist progress: ' + got + ' of ' + total + ' tasks done');
+}
+function initTasks(){
+  document.querySelectorAll('input[type=checkbox][data-id]').forEach(function(b){
+    b.checked = !!done[b.dataset.id];
+    b.addEventListener('change', function(){
+      if(b.checked) done[b.dataset.id] = 1; else delete done[b.dataset.id];
+      persist(); updateProgress();
+    });
+  });
+  $('ov-reset').addEventListener('click', function(){
+    if(!window.confirm('Clear all of your checkmarks? This cannot be undone.')) return;
+    done = {}; persist();
+    document.querySelectorAll('input[type=checkbox][data-id]').forEach(function(b){ b.checked = false; });
+    updateProgress();
+  });
+  updateProgress();
+}
+
+/* ---------------- step 3 helpers ---------------- */
+function wordCount(s){ const m = s.trim().match(/\S+/g); return m ? m.length : 0; }
+function sentenceCount(s){ return s.split(/[.!?]+/).map(function(x){ return x.trim(); }).filter(Boolean).length; }
+function setRes(el, text, cls){ el.textContent = text; el.className = 'res' + (cls ? ' ' + cls : ''); }
+function initTools(){
+  $('motto-in').addEventListener('input', function(){
+    const n = wordCount(this.value), r = $('motto-res');
+    if(n === 0) setRes(r, '', '');
+    else if(n < 5) setRes(r, n + (n === 1 ? ' word' : ' words') + '. Add a few more. The goal is 5 to 8 words.', 'warn');
+    else if(n <= 8) setRes(r, n + ' words. That is the right length.', 'ok');
+    else setRes(r, n + ' words. Try trimming it to 8 words or fewer.', 'warn');
+  });
+  $('mission-in').addEventListener('input', function(){
+    const n = sentenceCount(this.value), r = $('mission-res');
+    if(n === 0) setRes(r, '', '');
+    else if(n < 3) setRes(r, n + (n === 1 ? ' sentence' : ' sentences') + '. Keep going. The goal is 3 to 5 sentences.', 'warn');
+    else if(n <= 5) setRes(r, n + ' sentences. That is the right length.', 'ok');
+    else setRes(r, n + ' sentences. Try trimming it to 5 sentences or fewer.', 'warn');
+  });
+}
+
+/* ---------------- PVLEGS flip cards ---------------- */
+function initFlip(){
+  document.querySelectorAll('.pv').forEach(function(c){
+    c.addEventListener('click', function(){
+      const on = c.classList.toggle('flipped');
+      c.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+  });
+}
+
+/* ---------------- pitch timer (5 minutes) ---------------- */
+const LIMIT = 300000, WARN = 240000;
+const T = {run:false, start:0, el:0, id:0, msg:''};
+function fmt(ms){ const s = Math.floor(ms / 1000); return Math.floor(s / 60) + ':' + (s % 60 < 10 ? '0' : '') + (s % 60); }
+function timerMsg(m){ if(m !== T.msg){ T.msg = m; $('tmsg').textContent = m; } }
+function tick(){
+  const ms = T.el + (T.run ? performance.now() - T.start : 0);
+  $('tdisp').textContent = fmt(ms);
+  $('tfill').style.width = Math.min(100, ms / LIMIT * 100) + '%';
+  const box = $('timer');
+  box.classList.toggle('warn', ms >= WARN && ms < LIMIT);
+  box.classList.toggle('over', ms >= LIMIT);
+  if(ms >= LIMIT) timerMsg('Time is up. Your pitch should be under 5 minutes.');
+  else if(ms >= WARN) timerMsg('Last minute. Time to wrap up.');
+  else if(T.run) timerMsg('Keep going.');
+  else if(ms > 0) timerMsg('Paused.');
+  else timerMsg('Ready when you are.');
+}
+function timerToggle(){
+  if(T.run){ T.el += performance.now() - T.start; T.run = false; clearInterval(T.id); $('tgo').textContent = 'Resume'; }
+  else { T.start = performance.now(); T.run = true; T.id = setInterval(tick, 200); $('tgo').textContent = 'Pause'; }
+  tick();
+}
+function timerReset(){
+  T.run = false; T.el = 0; clearInterval(T.id); $('tgo').textContent = 'Start'; T.msg = ''; tick();
+}
+function initTimer(){
+  $('tgo').addEventListener('click', timerToggle);
+  $('treset').addEventListener('click', timerReset);
+  tick();
+}
+
+/* ---------------- wire up ---------------- */
+$('outline').addEventListener('click', function(e){
+  const b = e.target.closest('.olink');
+  if(b) go(b.dataset.v, b.dataset.a || '');
+});
+document.querySelectorAll('[data-go]').forEach(function(b){ b.addEventListener('click', function(){ go(b.dataset.go); }); });
+$('menubtn').addEventListener('click', function(){ document.body.classList.contains('menu-open') ? closeMenu(true) : openMenu(); });
+$('bb-mid').addEventListener('click', openMenu);
+$('olclose').addEventListener('click', function(){ closeMenu(true); });
+$('scrim').addEventListener('click', function(){ closeMenu(true); });
+$('bb-prev').addEventListener('click', function(){ const t = this.dataset.to; if(t) go(t); });
+$('bb-next').addEventListener('click', function(){ const t = this.dataset.to; if(t) go(t); });
+$('totop').addEventListener('click', function(){ window.scrollTo({top:0, behavior:'smooth'}); });
+document.addEventListener('keydown', function(e){
+  if(!document.body.classList.contains('menu-open')) return;
+  if(e.key === 'Escape'){ closeMenu(true); return; }
+  if(e.key === 'Tab'){
+    const f = Array.prototype.slice.call($('outline').querySelectorAll('button')).filter(function(b){ return b.offsetWidth || b.offsetHeight || b.getClientRects().length; });
+    if(!f.length) return;
+    const first = f[0], last = f[f.length - 1];
+    if(e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+    else if(!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+  }
+});
+if(mqDesk.addEventListener){ mqDesk.addEventListener('change', function(){ if(mqDesk.matches) closeMenu(false); }); }
+window.addEventListener('scroll', onScroll, {passive:true});
+window.addEventListener('popstate', function(){
+  const h = (window.location.hash || '').replace('#', '').split('/');
+  go(VIEWS.indexOf(h[0]) >= 0 ? h[0] : 'home', h[1] || '', true);
+});
+initTasks(); initTools(); initFlip(); initTimer();
+syncChrome('home');
+(function(){
+  const h = (window.location.hash || '').replace('#', '').split('/');
+  if(h[0] && VIEWS.indexOf(h[0]) >= 0) go(h[0], h[1] || '', true);
+})();
+refreshContinue();
+spy();
+
+</script>
+</body>
+</html>
